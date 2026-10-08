@@ -2736,7 +2736,7 @@ function initLanding(){
   renderHoy(); renderCierre();
   { const t = porG(DATA,"RC").length, e = porG(DATA,"E").length, n = porG(DATA,"NOB").length, d = t-n;
     const goles = DATA.filter(m=>m.j).reduce((a,m)=>a+m.rc+m.nob,0);
-    const hs = $("#heroShr"); if(hs) hs.dataset.share = `La historia del Clásico Rosarino, partido por partido: Rosario Central vs Newell's Old Boys desde 1905.\n\n${fmt(DATA.length)} clásicos. Central ganó ${t}, Newell's ganó ${n} y empataron ${e}.\n\nRécords, goleadores, trivia y mucho más:`; }
+    const hs = $("#heroShr"); if(hs) hs.dataset.share = `La historia completa del Clásico Rosarino, partido por partido desde 1905.\n\nBuscá el clásico del día que naciste, los goleadores de cada época y las rachas, y poné a prueba lo que sabés en la trivia.\n\nEntrá acá:`; }
   setTimeout(abrirDesdeLink, 120);
   window.addEventListener("hashchange", abrirDesdeLink);
 }
