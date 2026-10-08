@@ -917,6 +917,50 @@ html.pn-on .flot{display:none}
 .bus-b b{font-size:18px;line-height:1.15}
 .bus-b span{font-size:13px;color:var(--txt-2);line-height:1.3}
 @media (max-width:760px){ .bus{grid-template-columns:1fr 1fr} .bus-b{min-height:112px;padding:14px} .bus-b b{font-size:16px} }
+
+/* ───────────── ÉPOCA Y "SEGÚN CÓMO SE CUENTE" ───────────── */
+.erasw{display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:4px;border-radius:16px;background:var(--bg-2);border:1.5px solid var(--linea-2);margin:-10px 0 22px;max-width:100%;width:fit-content}
+.erasw-k{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-3);padding:0 8px}
+.erasw button{min-height:40px;padding:6px 14px;border-radius:999px;border:0;background:transparent;font-weight:700;font-size:14px;color:var(--txt-2);white-space:nowrap}
+.erasw button[aria-pressed="true"]{background:var(--txt);color:var(--bg)}
+.erasw-f{margin:10px 0 0}
+.cta{margin-top:18px;background:var(--sup);border-radius:var(--r);padding:16px}
+.cta-h h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:30px;line-height:1;text-transform:uppercase}
+.cta-h p{margin:6px 0 12px;color:var(--txt-2);font-size:14px;max-width:70ch}
+.cta-t{display:flex;flex-direction:column;gap:6px}
+.cta-r{display:grid;grid-template-columns:minmax(0,2fr) 52px 64px 52px 64px minmax(110px,1fr) auto;gap:8px;align-items:center;background:var(--bg-2);border-radius:12px;padding:10px 12px}
+.cta-r.h{background:transparent;padding-top:0;padding-bottom:0;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--txt-3)}
+.cta-r.h span{text-align:center}
+.cta-r .n b{display:block;font-size:15px}
+.cta-r .n small{display:block;font-size:12px;color:var(--txt-2)}
+.cta-r .c{font-family:var(--f-display);font-size:24px;text-align:center}
+.cta-r .dif{font-family:var(--f-body);font-size:13px;font-weight:800}
+.cta-ver{min-height:38px;padding:6px 12px;font-size:13px}
+@media (max-width:760px){
+  .cta-r{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 8px}
+  .cta-r.h{display:none}
+  .cta-r .n{grid-column:1/-1}
+  .cta-r .c{font-size:22px}
+  .cta-r .c::before{display:block;font-family:var(--f-body);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--txt-3)}
+  .cta-r .c:nth-child(2)::before{content:"PJ"} .cta-r .c:nth-child(3)::before{content:"Central"} .cta-r .c:nth-child(4)::before{content:"Emp."} .cta-r .c:nth-child(5)::before{content:"Newell's"}
+  .cta-r .dif{grid-column:1/3;text-align:left}
+  .cta-r .dif::before{content:none}
+  .cta-ver{grid-column:3/5;justify-self:end}
+  .erasw-k{width:100%;padding:4px 8px 0}
+}
+@media (max-width:760px){ .cta-r .c.dif{font-size:15px} }
+/* Bajada del buscador: cómo contar el historial (compacta) */
+.vista{margin-top:12px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 12px;border-radius:var(--r);border:1.5px solid var(--linea-2);background:var(--bg-2)}
+.vista-k{margin:0 4px 0 2px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-2)}
+.vista .ofsw,.vista .erasw{margin:0;padding:3px;border-radius:999px;background:var(--sup);border:0;width:auto}
+.vista .erasw-k{display:none}
+.vista .ofsw button,.vista .erasw button{min-height:36px;padding:4px 12px;font-size:13px}
+.vista .ofsw button small{display:none}
+@media (max-width:760px){
+  .vista{padding:10px}
+  .vista-k{width:100%}
+  .vista .erasw{border-radius:14px}
+}
 .sec-shr{margin:0;align-self:center;min-height:36px}
 .anios-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .anios-h .shr{margin:0}
@@ -978,6 +1022,7 @@ html.pn-on .flot{display:none}
   <div class="wrap">
     <p class="bus-t">¿Qué querés buscar?</p>
     <div id="busOut"></div>
+    <div class="vista"><p class="vista-k">Y elegí cómo contar el historial</p><div class="ofsw" role="group" aria-label="Qué partidos contar"></div><div class="erasw" role="group" aria-label="Desde cuándo contar"></div></div>
   </div>
 </section>
 
@@ -992,7 +1037,7 @@ html.pn-on .flot{display:none}
 <section id="balance">
   <div class="wrap">
     <div class="sec-head"><span class="sec-num">02</span><h2>Balance histórico</h2><button type="button" class="shr sec-shr" data-share="El balance completo del Clásico Rosarino, desde 1905:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
-    <div class="ofsw" role="group" aria-label="Qué partidos contar"></div>
+
     <div class="notice" id="notice"></div>
     <div class="bal-top">
       <div class="bal-total">
@@ -1186,6 +1231,7 @@ html.pn-on .flot{display:none}
         </div>
       </div>
       <div class="ofsw ofsw-f" role="group" aria-label="Qué partidos contar"></div>
+      <div class="erasw erasw-f" role="group" aria-label="Desde cuándo contar"></div>
       <div class="f-foot">
         <div class="counter" id="counter" aria-live="polite"></div>
         <div class="sort-m">
@@ -1260,6 +1306,14 @@ html.pn-on .flot{display:none}
     <div id="ciOut"></div>
   </div>
 </section>
+
+<section id="cuenta">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">20</span><h2>Según cómo se cuente</h2><button type="button" class="shr sec-shr" data-share="El historial del Clásico Rosarino contado de todas las formas: con y sin amistosos, desde 1905, 1931 o 1939:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button></div>
+    
+    <div id="cuentaOut"></div>
+  </div>
+</section>
 </main>
 
 <footer>
@@ -1322,8 +1376,8 @@ const DATA = PARTIDOS.map((m,idx)=>{
 const COMPLETO = !RESUMEN || DATA.length >= RESUMEN.pj;
 
 /* Estado */
-const st = { ids:null, idsT:"", anio:"", q:"", of:false, am:"", c:"", dec:"", loc:new Set(), res:new Set(), sk:"f", sd:-1, open:new Set(), lim:50 };
-const hayFiltro = ()=> !!(st.ids || st.anio || st.q || st.of || st.am || st.c || st.dec || st.loc.size || st.res.size);
+const st = { ids:null, idsT:"", anio:"", era:"", q:"", of:false, am:"", c:"", dec:"", loc:new Set(), res:new Set(), sk:"f", sd:-1, open:new Set(), lim:50 };
+const hayFiltro = ()=> !!(st.ids || st.era || st.anio || st.q || st.of || st.am || st.c || st.dec || st.loc.size || st.res.size);
 const usarResumen = ()=> !COMPLETO && !hayFiltro();
 
 function filtrar(){
@@ -1332,6 +1386,7 @@ function filtrar(){
     if(st.ids && !st.ids.has(m._id)) return false;
     if(st.anio && String(m.a)!==st.anio) return false;
     if(st.of && m.am==="Amistoso") return false;
+    if(st.era && !ERAS[st.era].fn(m)) return false;
     if(st.am && m.am!==st.am) return false;
     if(st.c && m.c!==st.c) return false;
     if(st.dec && String(m._dec)!==st.dec) return false;
@@ -1419,8 +1474,9 @@ function records(list, s){
   const jug = cr.filter(m=>m.j);
   const filtro = hayFiltro();
   const rompe = !!(st.ids || st.q || st.res.size || st.loc.size); // con estos filtros las rachas no tienen sentido
-  const soloOf = st.of && !(st.ids || st.anio || st.q || st.am || st.c || st.dec || st.loc.size || st.res.size);
-  const sfx = soloOf ? " (oficiales)" : filtro ? " (en este recorte)" : "";
+  const soloOf = (st.of || st.era) && !(st.ids || st.anio || st.q || st.am || st.c || st.dec || st.loc.size || st.res.size);
+  const corteTxt = [st.of?"oficiales":"", st.era==="amateur"?"amateurismo":st.era==="pro"?"desde 1931":st.era==="afa"?"desde 1939":""].filter(Boolean).join(", ");
+  const sfx = soloOf ? ` (${corteTxt})` : filtro ? " (en este recorte)" : "";
   const out = [];
   const ofi = jug.filter(m=>m.am!=="Amistoso");
   const goleada = (club)=>{
@@ -1453,7 +1509,7 @@ function records(list, s){
   const ult = cr[cr.length-1];
   if(ult){
     const L = localDe(ult);
-    out.push({t:ult.g==="RC"?"rc":ult.g==="NOB"?"nob":"neu",k:soloOf?"Último clásico oficial":filtro?"Último del recorte":"Último clásico",v:ult.j?`${L.lg}–${L.vg}`:"—",u:ult.g==="RC"?"ganó Central":ult.g==="NOB"?"ganó Newell's":ult.g==="E"?"empate":"sin resultado",d:[etiqueta(ult),ult.c,ult.fx].filter(Boolean).join(" · "),p:ult});
+    out.push({t:ult.g==="RC"?"rc":ult.g==="NOB"?"nob":"neu",k:soloOf?`Último clásico (${corteTxt})`:filtro?"Último del recorte":"Último clásico",v:ult.j?`${L.lg}–${L.vg}`:"—",u:ult.g==="RC"?"ganó Central":ult.g==="NOB"?"ganó Newell's":ult.g==="E"?"empate":"sin resultado",d:[etiqueta(ult),ult.c,ult.fx].filter(Boolean).join(" · "),p:ult});
   }
   if(s.jug) out.push({t:"neu",k:"Promedio de gol",v:fmt2(s.prom),u:"goles por clásico",d:`${fmt(s.grc+s.gnob)} goles en ${fmt(s.jug)} partido${s.jug===1?"":"s"} jugado${s.jug===1?"":"s"}`,ls:jug});
   return out;
@@ -1724,6 +1780,7 @@ function descFiltro(){
   const p=[];
   if(st.q) p.push(`“${st.q}”`);
   if(st.of) p.push("Solo oficiales");
+  if(st.era) p.push(ERAS[st.era].lab);
   if(st.am) p.push(st.am);
   if(st.c) p.push(st.c);
   if(st.dec) p.push(`${st.dec}s`);
@@ -1793,7 +1850,7 @@ function initControles(){
     }));
   });
   $$("[data-clear]").forEach(b=>b.addEventListener("click",()=>{
-    Object.assign(st,{ids:null,idsT:"",anio:"",q:"",of:false,am:"",c:"",dec:"",lim:50}); st.loc.clear(); st.res.clear();
+    Object.assign(st,{ids:null,idsT:"",era:"",anio:"",q:"",of:false,am:"",c:"",dec:"",lim:50}); st.loc.clear(); st.res.clear();
     $("#q").value=""; $("#fAm").value=""; $("#fC").value=""; $("#fDec").value=""; $("#fAnio").value="";
     $$(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));
     cambio();
@@ -2331,7 +2388,7 @@ function vistaLista(v){
     $$(".pn-sum button",b).forEach(x=>x.addEventListener("click",()=>{ v.g = v.g===x.dataset.g ? null : x.dataset.g; v.all=false; shDibujar(); }));
     const mas=$("#shMas",b); if(mas) mas.addEventListener("click",()=>{ v.all=true; shDibujar(); });
     $("#shToda",b).addEventListener("click",()=>{
-      Object.assign(st,{q:"",of:false,am:"",c:"",dec:"",anio:"",lim:50}); st.loc.clear(); st.res.clear();
+      Object.assign(st,{q:"",of:false,era:"",am:"",c:"",dec:"",anio:"",lim:50}); st.loc.clear(); st.res.clear();
       $("#q").value=""; $("#fAm").value=""; $("#fC").value=""; $("#fDec").value=""; $("#fAnio").value=""; $$(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));
       st.ids = new Set(R.ids); st.idsT = R.t;
       SH.foco = null; shCerrar(); cambio();
@@ -2431,7 +2488,7 @@ function vistaJugador(v){
     <div class="pn-acts"><button type="button" class="btn btn-sol" id="shToda">Ver toda la página con sus ${ps.length} clásicos</button>${SHR(`${o.j} le hizo ${o.goles} goles a ${NOM[o.club==="RC"?"NOB":"RC"]} en ${plural(ps.length,"clásico")}.`).replace('class="shr"','class="shr btn"')}</div>`;
   return {titulo:o.j, html, after(b){
     $("#shToda",b).addEventListener("click",()=>{
-      Object.assign(st,{q:"",of:false,am:"",c:"",dec:"",anio:"",lim:50}); st.loc.clear(); st.res.clear();
+      Object.assign(st,{q:"",of:false,era:"",am:"",c:"",dec:"",anio:"",lim:50}); st.loc.clear(); st.res.clear();
       $("#q").value=""; $("#fAm").value=""; $("#fC").value=""; $("#fDec").value=""; $("#fAnio").value=""; $$(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));
       st.ids = new Set(ms.map(m=>m._id)); st.idsT = `Clásicos con goles de ${o.j}`;
       SH.foco = null; shCerrar(); cambio();
@@ -2867,7 +2924,7 @@ function initLanding(){
   const ar = $(".arriba",fl); ar.addEventListener("click",()=>window.scrollTo({top:0,behavior:RM.matches?"auto":"smooth"}));
   let tk=false; window.addEventListener("scroll",()=>{ if(tk) return; tk=true; requestAnimationFrame(()=>{ ar.hidden = window.scrollY < 900; tk=false; }); }, {passive:true});
   document.addEventListener("click", e=>{ if(e.target.closest("[data-arriba]")) window.scrollTo({top:0,behavior:RM.matches?"auto":"smooth"}); });
-  renderHoy(); renderCierre(); initBuscador();
+  renderHoy(); renderCierre(); initBuscador(); initEras(); renderCuenta();
   { const t = porG(DATA,"RC").length, e = porG(DATA,"E").length, n = porG(DATA,"NOB").length, d = t-n;
     const goles = DATA.filter(m=>m.j).reduce((a,m)=>a+m.rc+m.nob,0);
     const hs = $("#heroShr"); if(hs) hs.dataset.share = `La historia completa del Clásico Rosarino, partido por partido desde 1905.\n\nBuscá el clásico del día que naciste, los goleadores de cada época y las rachas, y poné a prueba lo que sabés en la trivia.\n\nEntrá acá:`; }
@@ -2879,7 +2936,46 @@ function renderLanding(){
   renderAdn(list); renderUltima(list); renderCabalas(list); renderDecisivos(list); renderEpocas(); renderTorneos(list); renderCanchas(list);
 }
 const _render3 = render;
-render = function(anim){ _render3(anim); renderLanding(); };
+render = function(anim){ _render3(anim); renderLanding(); marcarEras(); };
+
+/* ── Época: toda la historia / amateurismo / profesionalismo / desde 1939 ── */
+const ERAS = {
+  "":      {b:"Toda la historia", lab:"Toda la historia", fn:()=>true},
+  amateur: {b:"Amateurismo", lab:"Amateurismo (1905–1931)", fn:m=>m.f<"1931-06-22"},
+  pro:     {b:"Profesionalismo", lab:"Profesionalismo (desde 1931)", fn:m=>m.f>="1931-06-22"},
+  afa:     {b:"Desde 1939", lab:"Desde 1939 (torneos de AFA)", fn:m=>m.f>="1939-01-01"},
+};
+function initEras(){
+  $$(".erasw").forEach(g=>{
+    g.innerHTML = `<span class="erasw-k">Desde cuándo contar</span>` + Object.entries(ERAS).map(([k,e])=>`<button type="button" data-era="${k}">${e.b}</button>`).join("");
+    $$("button",g).forEach(b=>b.addEventListener("click",()=>{ st.era = b.dataset.era; cambio(); }));
+  });
+}
+function marcarEras(){ $$(".erasw button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.era===(st.era||"")))); }
+function renderCuenta(){
+  const el = $("#cuentaOut"); if(!el) return;
+  const ofi = m=>m.am!=="Amistoso";
+  const filas = [
+    {t:"Toda la historia", s:"1905 a hoy, con amistosos", ms:DATA, era:"", of:false},
+    {t:"Solo oficiales", s:"1905 a hoy, sin amistosos", ms:DATA.filter(ofi), era:"", of:true},
+    {t:"Amateurismo", s:"Oficiales, 1905 a 1931", ms:DATA.filter(m=>ofi(m)&&ERAS.amateur.fn(m)), era:"amateur", of:true},
+    {t:"Profesionalismo", s:"Oficiales, desde 1931", ms:DATA.filter(m=>ofi(m)&&ERAS.pro.fn(m)), era:"pro", of:true},
+    {t:"Desde 1939", s:"Oficiales, desde el ingreso a los torneos de AFA", ms:DATA.filter(m=>ofi(m)&&ERAS.afa.fn(m)), era:"afa", of:true},
+  ];
+  el.innerHTML = `<div class="cta"><div class="cta-h"><p>El historial se puede contar de distintas formas: con o sin amistosos, desde 1905, desde el profesionalismo (1931) o desde el ingreso a los torneos de AFA (1939). Acá están todas: tocá un número para ver esos partidos, o "Ver así" para recalcular toda la página.</p></div>
+    <div class="cta-t">
+      <div class="cta-r h" aria-hidden="true"><span></span><span>PJ</span><span class="rc-t">Central</span><span>Emp.</span><span class="nob-t">Newell's</span><span>Dif.</span><span></span></div>
+      ${filas.map((f,i)=>{ const r=porG(f.ms,"RC"), e=porG(f.ms,"E"), n=porG(f.ms,"NOB"), d=r.length-n.length;
+        return `<div class="cta-r"><span class="n"><b>${f.t}</b><small>${f.s}</small></span>
+          <span class="c tap"${attrL(f.t, f.s, f.ms, true)}>${f.ms.length}</span>
+          <span class="c rc-t tap"${attrL(`${f.t}: ganó Central`, f.s, r, true)}>${r.length}</span>
+          <span class="c emp-t tap"${attrL(`${f.t}: empates`, f.s, e, true)}>${e.length}</span>
+          <span class="c nob-t tap"${attrL(`${f.t}: ganó Newell's`, f.s, n, true)}>${n.length}</span>
+          <span class="c dif ${d>0?"rc-t":d<0?"nob-t":"emp-t"}">${d>0?"Central +"+d:d<0?"Newell's +"+(-d):"Igualado"}</span>
+          <button type="button" class="btn cta-ver" data-cta="${i}">Ver así</button></div>`; }).join("")}
+    </div></div>`;
+  $$("[data-cta]",el).forEach(b=>b.addEventListener("click",()=>{ const f=filas[+b.dataset.cta]; st.era=f.era; st.of=f.of; cambio(); $("#balance").scrollIntoView({behavior:RM.matches?"auto":"smooth"}); }));
+}
 
 buildCols(); llenarSelects(); initControles(); initOficiales(); initCarrera(); initFichas(); initTuClasico(); dibujarTrivia(); initCarreraClick(); initLanding(); $("#curMas").addEventListener("click",()=>renderCuriosidades(filtrar(),true)); render(false);
 })();
