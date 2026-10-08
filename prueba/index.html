@@ -731,6 +731,9 @@ html.pn-on,html.pn-on body{overflow:hidden}
   .pa-grid dd{font-size:14px}
 }
 
+.dec-labs > span.tap{cursor:pointer;padding:8px 0;border-radius:6px;text-decoration:none;color:var(--txt);background:var(--bg-2)}
+.dec-labs > span.tap:hover{background:var(--sup-2)}
+
 .fact,.cur,.tc-card{position:relative}
 
 /* ───────────── COMPARTIR ───────────── */
@@ -992,13 +995,13 @@ html.pn-on .flot{display:none}
 <section id="decadas">
   <div class="wrap">
     <div class="sec-head"><span class="sec-num">05</span><h2>Década por década</h2><span class="cut-tag" data-cut></span></div>
-    <p class="sec-sub">Para arriba, lo que ganó Central. Para abajo, lo que ganó Newell's. En el medio, los empates. Pasá el mouse o tocá una década.</p>
+    <p class="sec-sub">Para arriba, lo que ganó Central. Para abajo, lo que ganó Newell's. En el medio, los empates. Tocá el año de abajo para ver los partidos de esa década, o una columna para ver su detalle.</p>
     <div class="dec-wrap">
       <div class="dec-card">
         <div class="dec-axis-lab"><span class="rc-t">▲ Ganó Central</span><span class="emp-t">■ Empates al medio</span></div>
         <div class="plot"><div class="cols" id="cols"></div></div>
         <div class="dec-axis-lab" style="margin-top:6px;margin-bottom:0"><span class="nob-t">▼ Ganó Newell's</span><span></span></div>
-        <div class="dec-labs" id="decLabs" aria-hidden="true"></div>
+        <div class="dec-labs" id="decLabs"></div>
         <div class="dom" id="dom" aria-hidden="true"></div>
         <div class="dom-lab"><span><i style="background:var(--rc-azul)"></i>Década de Central</span><span><i style="background:var(--nob-rojo)"></i>Década de Newell's</span><span><i style="background:var(--emp)"></i>Pareja</span></div>
       </div>
@@ -2396,6 +2399,9 @@ function decorar(){
       setL(fs[1], `Los clásicos de ${decTxt(last.dec)}`, "", list.filter(m=>m._dec===last.dec), true);
     }
   }
+  // etiquetas de las décadas (abajo de las barras)
+  $$("#decLabs > span").forEach((sp,i)=>{ const d = decsTodas[i]; setL(sp, `Los clásicos de ${decTxt(d)}`, "", list.filter(m=>m._dec===d), true); sp.setAttribute("aria-label", `Ver los clásicos de ${decTxt(d)}`); });
+  $$("#dom > span").forEach((sp,i)=>{ const d = decsTodas[i]; const ms = list.filter(m=>m._dec===d); if(ms.length){ sp.dataset.l = regL(`Los clásicos de ${decTxt(d)}`, "", ms, true); sp.style.cursor="pointer"; } else sp.removeAttribute("data-l"); });
   // ámbitos
   $$("#ambBody tr.r").forEach(tr=>{
     const am = $(".an",tr).textContent, ms = list.filter(m=>(m.am||"Sin dato")===am);
@@ -2440,15 +2446,47 @@ const HOY = new Date();
 const URL_SITIO = ((document.querySelector('meta[property="og:url"]')||{}).content || "").startsWith("http") ? document.querySelector('meta[property="og:url"]').content : location.href.split("#")[0];
 const ICO_SHR = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const SHR = (txt, solo) => `<button type="button" class="shr${solo?" solo":""}" data-share="${esc(sinTags(txt))}" aria-label="Compartir: ${esc(sinTags(txt)).slice(0,80)}">${ICO_SHR}${solo?"":"Compartir"}</button>`;
-function compartir(txt){
-  const t = `${txt}\n\nClásico Rosarino · el historial completo: ${URL_SITIO}`;
+/* Link directo: lleva a la persona exactamente al dato compartido */
+const enc36 = ids => { const v=[...new Set(ids)].sort((a,b)=>a-b), out=[]; for(let i=0;i<v.length;){ let j=i; while(j+1<v.length && v[j+1]===v[j]+1) j++; out.push(j>i ? v[i].toString(36)+"-"+v[j].toString(36) : v[i].toString(36)); i=j+1; } return out.join("."); };
+const dec36 = str => String(str||"").split(".").flatMap(p=>{ const [a,b]=p.split("-").map(x=>parseInt(x,36)); if(isNaN(a)) return []; if(b==null||isNaN(b)) return [a]; const r=[]; for(let k=a;k<=b && r.length<3000;k++) r.push(k); return r; }).filter(i=>DATA[i]);
+const claveP = m => { const ms = DATA.filter(x=>x.f===m.f); return m.f + (ms.length>1 ? "."+(ms.indexOf(m)+1) : ""); };
+const verLista = R => (R.asc?"la:":"l:") + R.t + "~" + enc36(R.ids);
+function linkDe(btn){
+  let ver = "";
+  if(btn.closest("#shBody") && SH.st.length){
+    const v = SH.st[SH.st.length-1];
+    if(v.t==="p") ver = "p:"+claveP(DATA[v.id]);
+    else if(v.t==="j") ver = "j:"+v.k;
+    else if(v.t==="l"||v.t==="g"){ const R=REG.get(v.k); if(R) ver = v.t==="g" ? "g:"+(v.club||"RC")+"~"+enc36(R.ids) : verLista(R); }
+  } else {
+    const c = btn.closest("[data-l],[data-p],[data-jug],[data-gl]");
+    if(c && c.dataset.p) ver = "p:"+claveP(DATA[+c.dataset.p]);
+    else if(c && c.dataset.jug) ver = "j:"+c.dataset.jug;
+    else if(c && c.dataset.l){ const R=REG.get(c.dataset.l); if(R) ver = verLista(R); }
+    else { const sc = btn.closest("section[id]"); if(sc) ver = "s:"+sc.id; }
+  }
+  return URL_SITIO.split("#")[0] + (ver ? "#ver="+encodeURIComponent(ver) : "");
+}
+function compartir(txt, link){
+  const t = `${txt}\n\n${link||URL_SITIO}`;
   const movil = window.matchMedia("(pointer:coarse)").matches;
   if(movil && navigator.share){ navigator.share({text:t}).catch(()=>{}); }
   else window.open("https://wa.me/?text="+encodeURIComponent(t), "_blank", "noopener");
 }
+function abrirDesdeLink(){
+  const m = /[#&]ver=([^&]+)/.exec(location.hash); if(!m) return;
+  let ver = ""; try{ ver = decodeURIComponent(m[1]); }catch(e){ return; }
+  history.replaceState(null, "", location.pathname + location.search);
+  const tipo = ver.slice(0, ver.indexOf(":")), val = ver.slice(ver.indexOf(":")+1);
+  if(tipo==="p"){ const [f,n] = val.split("."); const ms = DATA.filter(x=>x.f===f); const x = ms[(+n||1)-1]; if(x) shAbrir({t:"p", id:x._id}); }
+  else if(tipo==="j"){ if(JUG.has(val)) shAbrir({t:"j", k:val}); }
+  else if(tipo==="l"||tipo==="la"){ const i=val.lastIndexOf("~"); const ms = dec36(val.slice(i+1)).map(k=>DATA[k]); if(ms.length) shAbrir({t:"l", k:regL(val.slice(0,i)||"Clásicos", "", ms, tipo==="la")}); }
+  else if(tipo==="g"){ const i=val.indexOf("~"); const ms = dec36(val.slice(i+1)).map(k=>DATA[k]); if(ms.length) shAbrir({t:"g", k:regG("Todos los goleadores", ms), club:val.slice(0,i)}); }
+  else if(tipo==="s"){ const sc=document.getElementById(val); if(sc) sc.scrollIntoView(); }
+}
 document.addEventListener("click", e=>{
   const b = e.target.closest("[data-share]"); if(!b) return;
-  e.preventDefault(); e.stopImmediatePropagation(); compartir(b.dataset.share);
+  e.preventDefault(); e.stopImmediatePropagation(); compartir(b.dataset.share, linkDe(b));
 }, true);
 const diasDesde = m => { const p=String(m.f).split("-").map(Number); return Math.floor((HOY - new Date(p[0],p[1]-1,p[2]))/864e5); };
 function haceTxt(m){
@@ -2693,6 +2731,8 @@ function initLanding(){
   let tk=false; window.addEventListener("scroll",()=>{ if(tk) return; tk=true; requestAnimationFrame(()=>{ ar.hidden = window.scrollY < 900; tk=false; }); }, {passive:true});
   document.addEventListener("click", e=>{ if(e.target.closest("[data-arriba]")) window.scrollTo({top:0,behavior:RM.matches?"auto":"smooth"}); });
   renderHoy(); renderCierre();
+  setTimeout(abrirDesdeLink, 120);
+  window.addEventListener("hashchange", abrirDesdeLink);
 }
 function renderLanding(){
   const list = filtrar();
