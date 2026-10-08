@@ -19,8 +19,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Clásico Rosarino 1905–2026">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='16' height='32' fill='%231E4BA8'/%3E%3Crect x='16' width='16' height='32' fill='%23E4002B'/%3E%3Crect x='15' width='2' height='32' fill='%23FFD100'/%3E%3C/svg%3E">
-<meta name="theme-color" content="#0A2C6E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3CclipPath id='r'%3E%3Crect width='32' height='32' rx='7'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23r)'%3E%3Crect width='16' height='32' fill='%231E4BA8'/%3E%3Crect x='4' width='4' height='32' fill='%23FFD100'/%3E%3Crect x='12' width='4' height='32' fill='%23FFD100'/%3E%3Crect x='16' width='8' height='32' fill='%23E4002B'/%3E%3Crect x='24' width='8' height='32' fill='%23111111'/%3E%3C/g%3E%3C/svg%3E">
+<meta name="theme-color" content="#0B0D12">
 <style>
 /* ═══════════════════════════════════════════════
    COLORES — cambiar acá y se cambia en toda la página
@@ -112,9 +112,8 @@ button{cursor:pointer}
 .ht-vs b{font-family:var(--f-display);font-weight:400;font-size:clamp(30px,5vw,56px);line-height:1;background:var(--bg);color:var(--txt);padding:6px 12px 4px;border-radius:8px;transform:rotate(-6deg)}
 .ht-vs span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--bg);color:var(--emp-texto);padding:4px 8px;border-radius:6px;white-space:nowrap}
 .hero-foot{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
-.hero-shr{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:10px 20px;border-radius:999px;border:2px solid var(--rc-amarillo);background:linear-gradient(90deg,var(--rc-azul) 0 50%,var(--nob-rojo) 50% 100%);color:#fff;font-weight:800;letter-spacing:.04em;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.35);transition:transform .2s var(--ease)}
+.hero-shr{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:10px 20px;border-radius:999px;border:2px solid #fff;background:#fff;color:#0B0D12;font-weight:800;letter-spacing:.04em;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.35);transition:transform .2s var(--ease)}
 .hero-shr:hover{transform:translateY(-2px)}
-.hero-shr span{text-shadow:0 1px 2px rgba(0,0,0,.5)}
 .hero-cta{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:10px 20px;border-radius:999px;background:var(--bg);color:var(--txt);text-decoration:none;font-weight:700;letter-spacing:.04em;border:2px solid var(--txt);transition:transform .2s var(--ease),background .2s}
 .hero-cta:hover{transform:translateY(-2px);background:var(--sup-2)}
 
@@ -924,7 +923,7 @@ html.pn-on .flot{display:none}
     <div class="hero-foot">
       <a class="hero-cta" href="#partidos"><span id="hTot">0</span>&nbsp;clásicos · buscar partidos
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v11M3 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <button type="button" class="hero-shr" id="heroShr" data-share="Clásico Rosarino: el historial completo"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Compartí el historial</span></button>
+      <button type="button" class="hero-shr" id="heroShr" data-share="Clásico Rosarino: el historial completo"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Compartí el Clásico Rosarino</span></button>
     </div>
   </div>
 </header>
@@ -2737,7 +2736,7 @@ function initLanding(){
   renderHoy(); renderCierre();
   { const t = porG(DATA,"RC").length, e = porG(DATA,"E").length, n = porG(DATA,"NOB").length, d = t-n;
     const goles = DATA.filter(m=>m.j).reduce((a,m)=>a+m.rc+m.nob,0);
-    const hs = $("#heroShr"); if(hs) hs.dataset.share = `Clásico Rosarino: todos los partidos entre Central y Newell's desde 1905.\n\n${fmt(DATA.length)} clásicos · Central ${t} · empates ${e} · Newell's ${n} · ${fmt(goles)} goles.\n${d>0?`Central manda por ${d}`:d<0?`Newell's manda por ${-d}`:"Están igualados"}.\n\nRécords, goleadores, la trivia y tu clásico, acá:`; }
+    const hs = $("#heroShr"); if(hs) hs.dataset.share = `La historia del Clásico Rosarino, partido por partido: Rosario Central vs Newell's Old Boys desde 1905.\n\n${fmt(DATA.length)} clásicos. Central ganó ${t}, Newell's ganó ${n} y empataron ${e}.\n\nRécords, goleadores, trivia y mucho más:`; }
   setTimeout(abrirDesdeLink, 120);
   window.addEventListener("hashchange", abrirDesdeLink);
 }
