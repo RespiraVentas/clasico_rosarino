@@ -758,6 +758,15 @@ html.pn-on,html.pn-on body{overflow:hidden}
   .an{min-height:34px;font-size:11px}
 }
 
+.gl-h{margin:14px 18px 8px;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-2)}
+.gl-h span{font-family:var(--f-display);font-weight:400;font-size:24px;letter-spacing:.01em;margin-right:4px}
+.ver-gol{display:flex;flex-wrap:wrap;gap:8px;margin:-6px 0 18px}
+.ver-gol .btn b{font-family:var(--f-display);font-weight:400;font-size:20px}
+
+.gl-q{margin-top:10px}
+.gl-q input{width:100%;min-height:46px;background:var(--bg-2);border:1.5px solid var(--linea-2);border-radius:10px;padding:10px 12px;color:var(--txt);font:inherit}
+.gl-q input:focus{border-color:var(--txt);outline:none}
+
 .fact,.cur,.tc-card{position:relative}
 
 /* ───────────── COMPARTIR ───────────── */
@@ -897,6 +906,17 @@ html.pn-on .flot{display:none}
 .hoy-c,.ult-r,.ci-box,.rec{position:relative}
 .ult-r .go{display:none}
 .rec .shr{margin-top:10px}
+
+/* ───────────── BUSCADOR RÁPIDO ───────────── */
+#buscador{padding:28px 0 0}
+.bus-t{margin:0 0 12px;font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--txt-2)}
+.bus{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.bus-b{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:118px;padding:16px;border-radius:var(--r);border:1.5px solid var(--linea-2);background:var(--sup);color:var(--txt);text-align:left;font:inherit;cursor:pointer;transition:transform .2s var(--ease),border-color .2s,background .2s}
+.bus-b:hover{transform:translateY(-2px);border-color:var(--txt);background:var(--sup-2)}
+.bus-b svg{color:var(--txt);opacity:.9}
+.bus-b b{font-size:18px;line-height:1.15}
+.bus-b span{font-size:13px;color:var(--txt-2);line-height:1.3}
+@media (max-width:760px){ .bus{grid-template-columns:1fr 1fr} .bus-b{min-height:112px;padding:14px} .bus-b b{font-size:16px} }
 .sec-shr{margin:0;align-self:center;min-height:36px}
 .anios-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .anios-h .shr{margin:0}
@@ -954,6 +974,13 @@ html.pn-on .flot{display:none}
 </header>
 
 <main>
+<section id="buscador" aria-label="Buscador rápido">
+  <div class="wrap">
+    <p class="bus-t">¿Qué querés buscar?</p>
+    <div id="busOut"></div>
+  </div>
+</section>
+
 <section id="hoy">
   <div class="wrap">
     <div class="sec-head"><span class="sec-num">01</span><h2>Un día como hoy</h2><button type="button" class="shr sec-shr" data-share="¿Qué clásicos rosarinos se jugaron un día como hoy? Mirá:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button></div>
@@ -1210,6 +1237,7 @@ html.pn-on .flot{display:none}
       </div>
       <div class="jug-sug" id="jqSug"></div>
     </div>
+    <div class="ver-gol"><button type="button" class="btn" id="verGolRC">Todos los de Central · <b class="n rc-t"></b></button><button type="button" class="btn" id="verGolNOB">Todos los de Newell's · <b class="n nob-t"></b></button></div>
     <div class="scor">
       <div class="sc-col sc-rc"><div class="sc-h"><b>Central</b><span id="scRcT"></span></div><div id="scRc"></div></div>
       <div class="sc-col sc-nob"><div class="sc-h"><b>Newell's</b><span id="scNobT"></span></div><div id="scNob"></div></div>
@@ -2351,14 +2379,36 @@ function vistaPartido(v){
 function vistaGoleadores(v){
   const R = REG.get(v.k); if(!R) return {titulo:"Goleadores", html:`<div class="pn-empty">Esta lista ya no está disponible.</div>`};
   const ms = R.ids.map(i=>DATA[i]);
-  const tabla = club => { const mp=new Map(); for(const m of ms) for(const g of (club==="RC"?m.grc:m.gnob)){ if(g.ag||!g.j) continue; const o=mp.get(g.j)||{j:g.j,g:0,p:0}; o.g+=(+g.c||1); o.p++; mp.set(g.j,o); } return [...mp.values()].sort((a,b)=>b.g-a.g||a.j.localeCompare(b.j,"es")); };
-  const club = v.club || "RC", arr = tabla(club), otro = club==="RC"?"NOB":"RC";
-  const html = `<div class="pn-h"><div class="k">${plural(ms.length,"clásico")}</div><h3 id="shT" tabindex="-1">${esc(R.t)}</h3><p>Tocá un jugador para ver su ficha.</p></div>
+  // de más goles a menos; con los mismos goles, primero el que convirtió más recientemente
+  const tabla = club => { const mp=new Map(); for(const m of ms) for(const g of (club==="RC"?m.grc:m.gnob)){ if(g.ag||!g.j) continue; const o=mp.get(g.j)||{j:g.j,g:0,p:0,f1:m.f,f2:m.f}; o.g+=(+g.c||1); o.p++; if(m.f<o.f1) o.f1=m.f; if(m.f>o.f2) o.f2=m.f; mp.set(g.j,o); } return [...mp.values()].sort((a,b)=>b.g-a.g||(a.f2<b.f2?1:a.f2>b.f2?-1:0)||a.j.localeCompare(b.j,"es")); };
+  const club = v.club || "RC", arr = tabla(club);
+  const cls = club==="RC"?"rc-t":"nob-t";
+  let html = "", prev = null, pos = 0;
+  for(const o of arr){
+    pos++;
+    if(o.g!==prev){ if(prev!==null) html += `</ol>`; const n = arr.filter(x=>x.g===o.g).length; html += `<h4 class="gl-h"><span class="${cls}">${o.g} ${o.g===1?"gol":"goles"}</span> · ${plural(n,"jugador","jugadores")}</h4><ol class="pn-list">`; prev = o.g; }
+    const a1 = o.f1.slice(0,4), a2 = o.f2.slice(0,4);
+    html += `<li><button type="button" class="pn-row" data-jug="${esc(club+"|"+o.j)}"><span class="r1">${esc(o.j)}</span><span class="r2">${a1===a2?a1:a1+"–"+a2} · ${plural(o.p,"clásico")} con gol</span><b class="${cls}" style="grid-row:1/3;grid-column:2;font-family:var(--f-display);font-weight:400;font-size:28px">${o.g}</b></button></li>`;
+  }
+  if(prev!==null) html += `</ol>`;
+  const full = `<div class="pn-h"><div class="k">${plural(ms.length,"clásico")}</div><h3 id="shT" tabindex="-1">${esc(R.t)}</h3><p>De los que más goles hicieron a los que hicieron uno. Con los mismos goles, primero los más recientes. Tocá un jugador para ver su ficha.</p></div>
     <div class="pn-sec"><div class="pn-sum" style="grid-template-columns:1fr 1fr">
       <button type="button" class="s-rc" data-c="RC" aria-pressed="${club==="RC"}"><b>${tabla("RC").length}</b><span>De Central</span></button>
-      <button type="button" class="s-nob" data-c="NOB" aria-pressed="${club==="NOB"}"><b>${tabla("NOB").length}</b><span>De Newell's</span></button></div></div>
-    <ol class="pn-list">${arr.map((o,i)=>`<li><button type="button" class="pn-row" data-jug="${esc(club+"|"+o.j)}"><span class="r1">${i+1}. ${esc(o.j)}</span><span class="r2">${plural(o.p,"clásico")} con gol</span><b class="${club==="RC"?"rc-t":"nob-t"}" style="grid-row:1/3;grid-column:2;font-family:var(--f-display);font-weight:400;font-size:28px">${o.g}</b></button></li>`).join("")}</ol>`;
-  return {titulo:R.t, html, after(b){ $$(".pn-sum button",b).forEach(x=>x.addEventListener("click",()=>{ v.club=x.dataset.c; shDibujar(); })); }};
+      <button type="button" class="s-nob" data-c="NOB" aria-pressed="${club==="NOB"}"><b>${tabla("NOB").length}</b><span>De Newell's</span></button></div>
+      <div class="gl-q"><label class="sr" for="glQ">Filtrar por nombre</label><input id="glQ" type="search" placeholder="Si querés, escribí un nombre para filtrar…" autocomplete="off" value="${esc(v.q||"")}"></div></div>
+    <div id="glLista">${html || `<div class="pn-empty">Sin goleadores en estos partidos.</div>`}</div>
+    <div class="pn-empty" id="glNada" hidden>Ningún goleador con ese nombre.</div>`;
+  const filtrarGl = b => {
+    const ws = norm(v.q||"").trim().split(/\s+/).filter(Boolean); let total = 0;
+    $$(".gl-h", b).forEach(hd=>{ const ol = hd.nextElementSibling; let vis = 0;
+      $$("li", ol).forEach(li=>{ const ok = ws.every(w=>norm(li.textContent).includes(w)); li.hidden = !ok; if(ok) vis++; });
+      hd.hidden = !vis; ol.hidden = !vis; total += vis; });
+    const nada = $("#glNada", b); if(nada) nada.hidden = total>0;
+  };
+  return {titulo:R.t, html:full, after(b){
+    $$(".pn-sum button",b).forEach(x=>x.addEventListener("click",()=>{ v.club=x.dataset.c; shDibujar(); }));
+    const q = $("#glQ", b); q.addEventListener("input", ()=>{ v.q = q.value; filtrarGl(b); }); if(v.q) filtrarGl(b);
+  }};
 }
 
 /* ── Vista: jugador ── */
@@ -2421,6 +2471,8 @@ function decorar(){
   setL($("#sRc"), "Clásicos que ganó Central", "", rc);
   setL($("#sE"), "Clásicos empatados", "", e);
   setL($("#sNob"), "Clásicos que ganó Newell's", "", nob);
+  const golesDe = club => new Set(list.flatMap(m=>(club==="RC"?m.grc:m.gnob).filter(g=>!g.ag&&g.j).map(g=>g.j))).size;
+  [["#verGolRC","RC"],["#verGolNOB","NOB"]].forEach(([id,club])=>{ const b=$(id); if(!b) return; b.dataset.gl = regG("Todos los goleadores", list); b.dataset.club = club; $(".n",b).textContent = golesDe(club); });
   [["#scRc","RC"],["#scNob","NOB"]].forEach(([id,club])=>{ const el=$(`${id} .sc-more`); if(el){ el.dataset.gl = regG("Todos los goleadores", list); el.dataset.club = club; el.tabIndex=0; el.setAttribute("role","button"); el.classList.add("tap"); el.textContent += " · ver todos"; } });
   setL($("#gRc"), "Clásicos con goles de Central", "", list.filter(m=>m.j&&m.rc>0));
   setL($("#gNob"), "Clásicos con goles de Newell's", "", list.filter(m=>m.j&&m.nob>0));
@@ -2476,6 +2528,9 @@ function initCarreraClick(){
 /* ── Año por año ── */
 function renderAnios(list){
   const el = $("#aniosOut"); if(!el) return;
+  el.innerHTML = aniosHTML(list);
+}
+function aniosHTML(list){
   const anios = DATA.map(m=>+m.a), a1 = Math.min(...anios), a2 = Math.max(...anios);
   const porA = new Map(); for(const m of list){ const a=+m.a; if(!porA.has(a)) porA.set(a,[]); porA.get(a).push(m); }
   const filas = [];
@@ -2490,7 +2545,7 @@ function renderAnios(list){
     }
     filas.push(`<div class="an-row"><span class="lab">${d}s</span>${chips.join("")}</div>`);
   }
-  el.innerHTML = filas.join("") + `<div class="an-ley"><span><i style="background:var(--rc-azul);box-shadow:inset 0 -3px 0 var(--rc-amarillo)"></i>Ese año ganó más Central</span><span><i style="background:var(--nob-negro);box-shadow:inset 0 0 0 2px var(--nob-rojo)"></i>Ese año ganó más Newell's</span><span><i style="background:var(--emp)"></i>Parejo</span><span><i style="border:1.5px dashed var(--linea)"></i>Sin clásicos</span></div>`;
+  return filas.join("") + `<div class="an-ley"><span><i style="background:var(--rc-azul);box-shadow:inset 0 -3px 0 var(--rc-amarillo)"></i>Ese año ganó más Central</span><span><i style="background:var(--nob-negro);box-shadow:inset 0 0 0 2px var(--nob-rojo)"></i>Ese año ganó más Newell's</span><span><i style="background:var(--emp)"></i>Parejo</span><span><i style="border:1.5px dashed var(--linea)"></i>Sin clásicos</span></div>`;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -2776,7 +2831,34 @@ function vistaMenu(){
     after(b){ $$("[data-ir]",b).forEach(x=>x.addEventListener("click",()=>{ const id=x.dataset.ir; SH.foco=null; shCerrar(); setTimeout(()=>{ if(id==="top") window.scrollTo({top:0,behavior:RM.matches?"auto":"smooth"}); else document.getElementById(id).scrollIntoView({behavior:RM.matches?"auto":"smooth"}); }, 80); })); }};
 }
 const _vistaJugador = vistaJugador;
-vistaJugador = function(v){ return v.t==="m" ? vistaMenu() : _vistaJugador(v); };
+vistaJugador = function(v){ return v.t==="m" ? vistaMenu() : v.t==="y" ? vistaAnios() : _vistaJugador(v); };
+function vistaAnios(){
+  return {titulo:"Elegí un año", html:`<div class="pn-h"><div class="k">${fmt(new Set(DATA.map(m=>m.a)).size)} años con clásicos</div><h3 id="shT" tabindex="-1">Elegí un año</h3><p>Cada año tiene el color de quien ganó más clásicos. Tocá uno para ver sus partidos.</p></div><div class="pn-sec">${aniosHTML(DATA)}</div>`};
+}
+function initBuscador(){
+  const el = $("#busOut"); if(!el) return;
+  const anios = DATA.map(m=>+m.a), a1=Math.min(...anios), a2=Math.max(...anios);
+  const gl = club => new Set(DATA.flatMap(m=>(club==="RC"?m.grc:m.gnob).filter(g=>!g.ag&&g.j).map(g=>g.j))).size;
+  const ico = {
+    anio:`<svg viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+    gol:`<svg viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+    par:`<svg viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+    fecha:`<svg viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`
+  };
+  el.innerHTML = `<div class="bus">
+    <button type="button" class="bus-b" data-bus="anio">${ico.anio}<b>Buscá un año</b><span>De ${a1} a ${a2}</span></button>
+    <button type="button" class="bus-b" data-bus="gol">${ico.gol}<b>Buscá un goleador</b><span>${gl("RC")} de Central · ${gl("NOB")} de Newell's</span></button>
+    <button type="button" class="bus-b" data-bus="par">${ico.par}<b>Buscá un partido</b><span>Por torneo, rival, fecha o resultado</span></button>
+    <button type="button" class="bus-b" data-bus="fecha">${ico.fecha}<b>Tu fecha</b><span>Cómo le fue a cada uno desde que naciste</span></button></div>`;
+  const ir = (id, foco) => { const s=document.getElementById(id); if(!s) return; s.scrollIntoView({behavior:RM.matches?"auto":"smooth"}); if(foco) setTimeout(()=>{ const f=document.getElementById(foco); if(f) f.focus({preventScroll:true}); }, RM.matches?0:450); };
+  $$("[data-bus]",el).forEach(b=>b.addEventListener("click",()=>{
+    const t=b.dataset.bus;
+    if(t==="anio") shAbrir({t:"y"});
+    else if(t==="gol") shAbrir({t:"g", k:regG("Todos los goleadores", DATA), club:"RC"});
+    else if(t==="par") ir("partidos","q");
+    else if(t==="fecha") ir("tuclasico","tcF");
+  }));
+}
 function initLanding(){
   const fl = document.createElement("div"); fl.className="flot";
   fl.innerHTML = `<button type="button" class="arriba" hidden aria-label="Volver arriba">↑</button><button type="button" class="menu" aria-label="Ver secciones">☰ Secciones</button>`;
@@ -2785,7 +2867,7 @@ function initLanding(){
   const ar = $(".arriba",fl); ar.addEventListener("click",()=>window.scrollTo({top:0,behavior:RM.matches?"auto":"smooth"}));
   let tk=false; window.addEventListener("scroll",()=>{ if(tk) return; tk=true; requestAnimationFrame(()=>{ ar.hidden = window.scrollY < 900; tk=false; }); }, {passive:true});
   document.addEventListener("click", e=>{ if(e.target.closest("[data-arriba]")) window.scrollTo({top:0,behavior:RM.matches?"auto":"smooth"}); });
-  renderHoy(); renderCierre();
+  renderHoy(); renderCierre(); initBuscador();
   { const t = porG(DATA,"RC").length, e = porG(DATA,"E").length, n = porG(DATA,"NOB").length, d = t-n;
     const goles = DATA.filter(m=>m.j).reduce((a,m)=>a+m.rc+m.nob,0);
     const hs = $("#heroShr"); if(hs) hs.dataset.share = `La historia completa del Clásico Rosarino, partido por partido desde 1905.\n\nBuscá el clásico del día que naciste, los goleadores de cada época y las rachas, y poné a prueba lo que sabés en la trivia.\n\nEntrá acá:`; }
