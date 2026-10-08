@@ -897,6 +897,9 @@ html.pn-on .flot{display:none}
 .hoy-c,.ult-r,.ci-box,.rec{position:relative}
 .ult-r .go{display:none}
 .rec .shr{margin-top:10px}
+.sec-shr{margin:0;align-self:center;min-height:36px}
+.anios-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.anios-h .shr{margin:0}
 </style>
 </head>
 <body>
@@ -953,7 +956,7 @@ html.pn-on .flot{display:none}
 <main>
 <section id="hoy">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">01</span><h2>Un día como hoy</h2></div>
+    <div class="sec-head"><span class="sec-num">01</span><h2>Un día como hoy</h2><button type="button" class="shr sec-shr" data-share="¿Qué clásicos rosarinos se jugaron un día como hoy? Mirá:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button></div>
     
     <div id="hoyOut"></div>
   </div>
@@ -961,7 +964,7 @@ html.pn-on .flot{display:none}
 
 <section id="balance">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">02</span><h2>Balance histórico</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">02</span><h2>Balance histórico</h2><button type="button" class="shr sec-shr" data-share="El balance completo del Clásico Rosarino, desde 1905:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <div class="ofsw" role="group" aria-label="Qué partidos contar"></div>
     <div class="notice" id="notice"></div>
     <div class="bal-top">
@@ -999,7 +1002,7 @@ html.pn-on .flot{display:none}
 
 <section id="carrera">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">03</span><h2>La carrera</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">03</span><h2>La carrera</h2><button type="button" class="shr sec-shr" data-share="Quién fue ganando el historial del Clásico Rosarino, partido a partido, desde 1905:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <p class="sec-sub">Quién iba ganando el historial, partido a partido. Arriba de la línea manda Central; abajo, Newell's. Tocá cualquier punto para ver ese partido.</p>
     <div class="car-card">
       <div class="car-plot" id="carPlot" tabindex="0" role="img"></div>
@@ -1011,7 +1014,7 @@ html.pn-on .flot{display:none}
 
 <section id="adn">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">04</span><h2>El ADN del clásico</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">04</span><h2>El ADN del clásico</h2><button type="button" class="shr sec-shr" data-share="Todos los clásicos rosarinos en una sola imagen. Encontrá el tuyo:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <p class="sec-sub">Los 371 clásicos en una sola imagen, década por década. Cada cuadradito es un partido: tocalo. Con un filtro puesto, se resaltan los del recorte.</p>
     <div id="adnOut"></div>
   </div>
@@ -1019,7 +1022,7 @@ html.pn-on .flot{display:none}
 
 <section id="decadas">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><h2>Década por década</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">05</span><h2>Década por década</h2><button type="button" class="shr sec-shr" data-share="El Clásico Rosarino década por década: ¿quién dominó cada época?" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <p class="sec-sub">Para arriba, lo que ganó Central. Para abajo, lo que ganó Newell's. En el medio, los empates. Tocá el año de abajo para ver los partidos de esa década, o una columna para ver su detalle.</p>
     <div class="dec-wrap">
       <div class="dec-card">
@@ -1033,20 +1036,20 @@ html.pn-on .flot{display:none}
       <aside class="readout" id="readout"></aside>
     </div>
     <div class="facts" id="facts"></div>
-    <div class="anios"><h3 class="anios-t">Año por año</h3><p class="anios-s">Cada año, del color de quien ganó más clásicos. Tocá uno para ver sus partidos.</p><div id="aniosOut"></div></div>
+    <div class="anios" id="anios" data-sec="anios"><div class="anios-h"><h3 class="anios-t">Año por año</h3><button type="button" class="shr sec-shr" data-share="El Clásico Rosarino año por año. Buscá el año que quieras:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button></div><p class="anios-s">Cada año, del color de quien ganó más clásicos. Tocá uno para ver sus partidos.</p><div id="aniosOut"></div></div>
   </div>
 </section>
 
 <section id="records">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><h2>Récords</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">06</span><h2>Récords</h2><button type="button" class="shr sec-shr" data-share="Los récords del Clásico Rosarino: goleadas, rachas e invictos:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <div class="recs" id="recs"></div>
   </div>
 </section>
 
 <section id="ultima">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><h2>La última vez que…</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">07</span><h2>La última vez que…</h2><button type="button" class="shr sec-shr" data-share="¿Cuándo fue la última vez que…? Todo del Clásico Rosarino:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <p class="sec-sub">Tocá cualquiera para ver ese partido, o el número de veces para verlas todas.</p>
     <div id="ultOut"></div>
   </div>
@@ -1054,7 +1057,7 @@ html.pn-on .flot{display:none}
 
 <section id="curiosidades">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">08</span><h2>Curiosidades</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">08</span><h2>Curiosidades</h2><button type="button" class="shr sec-shr" data-share="Curiosidades del Clásico Rosarino que seguro no sabías:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <p class="sec-sub">Cada vez que entrás aparecen otras. También cambian con los filtros.</p>
     <div class="curs" id="curs"></div>
     <div class="tv-act"><button type="button" class="btn" id="curMas">Ver otras curiosidades</button></div>
@@ -1063,7 +1066,7 @@ html.pn-on .flot{display:none}
 
 <section id="cabalas">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">09</span><h2>Cábalas</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">09</span><h2>Cábalas</h2><button type="button" class="shr sec-shr" data-share="Cábalas del Clásico Rosarino: ¿a quién le conviene cada día, mes o cancha?" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <p class="sec-sub">¿A quién le conviene cada día, cada mes o cada cancha? Elegí la cábala y tocá cualquier fila.</p>
     <div id="cabOut"></div>
   </div>
@@ -1071,7 +1074,7 @@ html.pn-on .flot{display:none}
 
 <section id="decisivos">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">10</span><h2>Goles que valieron un clásico</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">10</span><h2>Goles que valieron un clásico</h2><button type="button" class="shr sec-shr" data-share="Los goles que definieron el Clásico Rosarino:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <p class="sec-sub">No el que más metió: el que hizo el gol que definió. Los 1–0 y los goles en clásicos ganados.</p>
     <div id="decOut"></div>
   </div>
@@ -1079,7 +1082,7 @@ html.pn-on .flot{display:none}
 
 <section id="tuclasico">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">11</span><h2>Tu clásico</h2></div>
+    <div class="sec-head"><span class="sec-num">11</span><h2>Tu clásico</h2><button type="button" class="shr sec-shr" data-share="Poné tu fecha de nacimiento y mirá cómo le fue a Central y a Newell's desde que naciste:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button></div>
     <p class="sec-sub">Poné tu fecha de nacimiento y mirá cómo le fue a cada uno desde que naciste.</p>
     <div class="tc-form"><div class="fld"><label for="tcF">Fecha de nacimiento</label><input id="tcF" class="noico" type="date" min="1880-01-01"></div></div>
     <div class="tc-out" id="tcOut" aria-live="polite"></div>
@@ -1088,7 +1091,7 @@ html.pn-on .flot{display:none}
 
 <section id="epocas">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">12</span><h2>Comparar épocas</h2></div>
+    <div class="sec-head"><span class="sec-num">12</span><h2>Comparar épocas</h2><button type="button" class="shr sec-shr" data-share="Compará dos épocas del Clásico Rosarino, lado a lado:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button></div>
     <p class="sec-sub">Elegí dos períodos y comparalos lado a lado.</p>
     <div id="epOut"></div>
   </div>
@@ -1096,7 +1099,7 @@ html.pn-on .flot{display:none}
 
 <section id="torneos">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">13</span><h2>Torneo por torneo</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">13</span><h2>Torneo por torneo</h2><button type="button" class="shr sec-shr" data-share="El Clásico Rosarino torneo por torneo:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <p class="sec-sub">Cada competencia, juntando todos sus años.</p>
     <div id="torOut"></div>
   </div>
@@ -1104,7 +1107,7 @@ html.pn-on .flot{display:none}
 
 <section id="canchas">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">14</span><h2>Canchas</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">14</span><h2>Canchas</h2><button type="button" class="shr sec-shr" data-share="El Clásico Rosarino cancha por cancha:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <p class="sec-sub">Dónde se jugó y a quién le fue mejor en cada lugar.</p>
     <div id="canOut"></div>
   </div>
@@ -1112,7 +1115,7 @@ html.pn-on .flot{display:none}
 
 <section id="ambito">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">15</span><h2>Desglose por ámbito</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">15</span><h2>Desglose por ámbito</h2><button type="button" class="shr sec-shr" data-share="El Clásico Rosarino en oficiales, amistosos y copas:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <table class="amb">
       <thead><tr><th scope="col">Ámbito</th><th scope="col">PJ</th><th scope="col">Central</th><th scope="col">Emp.</th><th scope="col">Newell's</th><th scope="col">Goles</th><th scope="col">Reparto</th></tr></thead>
       <tbody id="ambBody"></tbody>
@@ -1122,7 +1125,7 @@ html.pn-on .flot{display:none}
 
 <section id="partidos">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">16</span><h2>Todos los clásicos</h2></div>
+    <div class="sec-head"><span class="sec-num">16</span><h2>Todos los clásicos</h2><button type="button" class="shr sec-shr" data-share="Todos los clásicos rosarinos desde 1905, con buscador:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button></div>
     <div class="filters" id="filtros">
       <div class="f-row">
         <div class="fld">
@@ -1197,7 +1200,7 @@ html.pn-on .flot{display:none}
 
 <section id="goleadores">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">17</span><h2>Goleadores históricos</h2><span class="cut-tag" data-cut></span></div>
+    <div class="sec-head"><span class="sec-num">17</span><h2>Goleadores históricos</h2><button type="button" class="shr sec-shr" data-share="Los goleadores del Clásico Rosarino, con la ficha de cada uno:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button><span class="cut-tag" data-cut></span></div>
     <p class="sec-sub">Tocá un nombre para ver su ficha: todos sus goles en clásicos.</p>
     <div class="fld jug-bus">
       <label for="jq">Buscá cualquier goleador</label>
@@ -1216,7 +1219,7 @@ html.pn-on .flot{display:none}
 
 <section id="trivia">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">18</span><h2>Trivia clásica</h2></div>
+    <div class="sec-head"><span class="sec-num">18</span><h2>Trivia clásica</h2><button type="button" class="shr sec-shr" data-share="¿Cuánto sabés del Clásico Rosarino? Jugá la trivia:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button></div>
     <p class="sec-sub">¿Cuánto sabés del clásico? 10 preguntas al azar, sacadas de la historia.</p>
     <div class="tv" id="tv"></div>
   </div>
@@ -1224,7 +1227,7 @@ html.pn-on .flot{display:none}
 
 <section id="cierre">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">19</span><h2>Qué se juega en el próximo</h2></div>
+    <div class="sec-head"><span class="sec-num">19</span><h2>Qué se juega en el próximo</h2><button type="button" class="shr sec-shr" data-share="Qué se juega en el próximo Clásico Rosarino:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button></div>
     
     <div id="ciOut"></div>
   </div>
@@ -2515,7 +2518,7 @@ function linkDe(btn){
     if(c && c.dataset.p) ver = "p:"+claveP(DATA[+c.dataset.p]);
     else if(c && c.dataset.jug) ver = "j:"+c.dataset.jug;
     else if(c && c.dataset.l){ const R=REG.get(c.dataset.l); if(R) ver = verLista(R); }
-    else { const sc = btn.closest("section[id]"); if(sc) ver = "s:"+sc.id; }
+    else { const sc = btn.closest("[data-sec],section[id]"); if(sc) ver = "s:"+(sc.dataset.sec||sc.id); }
   }
   return URL_SITIO.split("#")[0] + (ver ? "#ver="+encodeURIComponent(ver) : "");
 }
