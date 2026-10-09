@@ -20,15 +20,15 @@
 <meta property="og:image:alt" content="Clásico Rosarino 1905–2026">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3CclipPath id='r'%3E%3Crect width='32' height='32' rx='7'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23r)'%3E%3Crect width='16' height='32' fill='%231E4BA8'/%3E%3Crect x='4' width='4' height='32' fill='%23FFD100'/%3E%3Crect x='12' width='4' height='32' fill='%23FFD100'/%3E%3Crect x='16' width='8' height='32' fill='%23E4002B'/%3E%3Crect x='24' width='8' height='32' fill='%23111111'/%3E%3C/g%3E%3C/svg%3E">
-<meta name="theme-color" content="#0B0D12">
+<meta name="theme-color" content="#0E0E0E">
 <style>
 /* ═══════════════════════════════════════════════
    COLORES — cambiar acá y se cambia en toda la página
    ═══════════════════════════════════════════════ */
 :root{
   /* Rosario Central */
-  --rc-azul-osc:#0A2C6E;
-  --rc-azul:#1E4BA8;
+  --rc-azul-osc:#10388A;
+  --rc-azul:#1F4FB5;
   --rc-amarillo:#FFD100;
   /* Newell's Old Boys */
   --nob-rojo:#E4002B;
@@ -36,18 +36,18 @@
   --nob-negro:#111111;
   --nob-texto:#FF5A6A;      /* rojo aclarado: texto chico de Newell's sobre fondo oscuro (AA) */
   /* Empates / neutro */
-  --emp:#4A5468;            /* relleno de empates */
-  --emp-texto:#B4BCCB;      /* texto de empates sobre fondo oscuro */
+  --emp:#525252;            /* relleno de empates */
+  --emp-texto:#B0B0B0;      /* texto de empates sobre fondo oscuro */
   /* Base */
-  --bg:#0B0D12;
-  --bg-2:#12161E;
-  --sup:#171C26;
-  --sup-2:#1F2531;
-  --linea:#2B3342;
-  --linea-2:#3A4354;
-  --txt:#EEF0F4;
-  --txt-2:#B3BBC9;
-  --txt-3:#8E97A8;
+  --bg:#0E0E0E;
+  --bg-2:#121212;
+  --sup:#1A1A1A;
+  --sup-2:#222222;
+  --linea:#2E2E2E;
+  --linea-2:#404040;
+  --txt:#F2F2F2;
+  --txt-2:#BEBEBE;
+  --txt-3:#9A9A9A;
   --blanco:#FFFFFF;
 
   --f-display:Impact,"Haettenschweiler","Arial Narrow Bold","Franklin Gothic Heavy",sans-serif-condensed,sans-serif;
@@ -118,7 +118,7 @@ button{cursor:pointer}
 .hero-cta:hover{transform:translateY(-2px);background:var(--sup-2)}
 
 /* ───────────── BARRA DE RECORTE (sticky) ───────────── */
-.cutbar{position:fixed;left:0;right:0;top:0;z-index:50;transform:translateY(-110%);transition:transform .35s var(--ease);background:rgba(11,13,18,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--linea)}
+.cutbar{position:fixed;left:0;right:0;top:0;z-index:50;transform:translateY(-110%);transition:transform .35s var(--ease);background:rgba(14,14,14,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--linea)}
 .cutbar.on{transform:none}
 .cutbar .wrap{display:flex;align-items:center;gap:10px;min-height:56px;padding-top:6px;padding-bottom:6px}
 .cutbar .dot{width:10px;height:10px;border-radius:50%;background:var(--rc-amarillo);box-shadow:14px 0 0 var(--nob-rojo);margin-right:18px;flex:none}
@@ -156,7 +156,7 @@ section{padding:64px 0 16px}
 .kpi .n{font-family:var(--f-display);font-size:clamp(52px,9vw,104px);line-height:.85}
 .kpi .l{font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
 .kpi .p{font-family:var(--f-display);font-size:28px;line-height:1;position:absolute;right:16px;top:14px}
-.kpi-rc{background:var(--rc-azul-osc);color:var(--rc-amarillo);box-shadow:inset 0 0 0 2px var(--rc-azul)}
+.kpi-rc{background:var(--rc-azul-osc);color:var(--rc-amarillo);box-shadow:inset 0 0 0 2px #2B5CC6}
 .kpi-rc .l{color:var(--blanco)}
 .kpi-e{background:var(--sup);color:var(--txt)}
 .kpi-e .l,.kpi-e .p{color:var(--emp-texto)}
@@ -176,10 +176,11 @@ section{padding:64px 0 16px}
 .goles .gn{font-family:var(--f-display);font-size:clamp(40px,6vw,64px);line-height:.9}
 .goles .gl{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--txt-2)}
 .goles .gmid{display:flex;flex-direction:column;gap:8px}
-.goles .gbar{display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px}
+.goles .gbar{display:flex;gap:6px;padding:3px;border-radius:999px;background:#555555}
 .goles .gbar span{transition:flex-grow var(--dur) var(--ease)}
-.goles .gbar .a{background:var(--rc-azul);box-shadow:inset 0 -3px 0 var(--rc-amarillo)}
-.goles .gbar .b{background:var(--nob-rojo);box-shadow:inset 0 -3px 0 var(--nob-negro)}
+.goles .gbar span{min-width:0;height:13px;border-radius:6px;flex-basis:0}
+.goles .gbar .a{background:linear-gradient(var(--rc-azul) 0 9px,var(--rc-amarillo) 9px)}
+.goles .gbar .b{background:linear-gradient(var(--nob-rojo) 0 9px,var(--nob-negro) 9px)}
 .goles .gcap{display:flex;justify-content:center;gap:6px;font-size:14px;color:var(--txt-2);text-align:center}
 .goles .gcap b{color:var(--txt)}
 .goles .right{text-align:right}
@@ -778,7 +779,7 @@ html.pn-on,html.pn-on body{overflow:hidden}
 /* ───────────── MENÚ FLOTANTE ───────────── */
 .flot{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:60;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
 html.pn-on .flot{display:none}
-.flot button{display:inline-flex;align-items:center;gap:8px;min-height:48px;min-width:48px;justify-content:center;padding:8px 14px;border-radius:999px;border:1.5px solid var(--linea-2);background:rgba(11,13,18,.92);backdrop-filter:blur(6px);color:var(--txt);font-weight:800;font-size:14px;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+.flot button{display:inline-flex;align-items:center;gap:8px;min-height:48px;min-width:48px;justify-content:center;padding:8px 14px;border-radius:999px;border:1.5px solid var(--linea-2);background:rgba(14,14,14,.92);backdrop-filter:blur(6px);color:var(--txt);font-weight:800;font-size:14px;box-shadow:0 6px 20px rgba(0,0,0,.45)}
 .flot .arriba{transition:opacity .2s,transform .2s}
 .flot .arriba[hidden]{display:inline-flex;opacity:0;pointer-events:none;transform:translateY(8px)}
 .mn-row .r1{font-family:var(--f-display);font-weight:400;font-size:24px;text-transform:uppercase;letter-spacing:.01em}
@@ -928,7 +929,7 @@ html.pn-on .flot{display:none}
 .cta-h h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:30px;line-height:1;text-transform:uppercase}
 .cta-h p{margin:6px 0 12px;color:var(--txt-2);font-size:14px;max-width:70ch}
 .cta-t{display:flex;flex-direction:column;gap:6px}
-.cta-r{display:grid;grid-template-columns:minmax(0,2fr) 52px 64px 52px 64px minmax(110px,1fr) auto;gap:8px;align-items:center;background:var(--bg-2);border-radius:12px;padding:10px 12px}
+.cta-r{display:grid;grid-template-columns:minmax(0,2fr) 52px 64px 52px 64px minmax(110px,1fr) 100px;gap:8px;align-items:center;background:var(--bg-2);border-radius:12px;padding:10px 12px}
 .cta-r.h{background:transparent;padding-top:0;padding-bottom:0;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--txt-3)}
 .cta-r.h span{text-align:center}
 .cta-r .n b{display:block;font-size:15px}
@@ -964,6 +965,152 @@ html.pn-on .flot{display:none}
 .sec-shr{margin:0;align-self:center;min-height:36px}
 .anios-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .anios-h .shr{margin:0}
+
+/* ═══ IDENTIDAD (variante A en todo el sitio) ═══
+   Riel gris detrás de cada barra: el azul y el rojo nunca se tocan
+   y la línea negra de Newell's se ve contra el gris, no contra el fondo. */
+:root{
+  --riel:#555555;
+  --rc-pieza:linear-gradient(var(--rc-azul) 0 69%,var(--rc-amarillo) 69%);
+  --nob-pieza:linear-gradient(var(--nob-rojo) 0 69%,var(--nob-negro) 69%);
+}
+/* Barras de varios tramos: Central · Empates · Newell's */
+.mini,.tc-bar,.gt-r .bar,.goles .gbar{display:flex;gap:6px;padding:3px;height:19px;border-radius:999px;background:var(--riel);overflow:visible}
+.mini i,.tc-bar i,.gt-r .bar i,.goles .gbar span{height:100%;min-width:0;border-radius:4px;box-shadow:none}
+.gt-r .bar i{flex:0 1 auto}
+.mini .a,.tc-bar i:nth-child(1),.gt-r .bar i:nth-child(1),.goles .gbar .a{background:var(--rc-pieza)!important}
+.mini .e,.tc-bar i:nth-child(2),.gt-r .bar i:nth-child(2){background:transparent!important}
+.mini .b,.tc-bar i:nth-child(3),.gt-r .bar i:nth-child(3),.goles .gbar .b{background:var(--nob-pieza)!important}
+/* Piezas sueltas: cada una con su borde gris */
+.dom span{border-radius:4px;box-shadow:0 0 0 2px var(--riel)}
+.dom .d-rc{background:var(--rc-pieza);box-shadow:0 0 0 2px var(--riel)}
+.dom .d-nob{background:var(--nob-pieza);box-shadow:0 0 0 2px var(--riel)}
+.dom .d-e{background:var(--emp);box-shadow:0 0 0 2px var(--riel)}
+.dom{gap:8px}
+.col .s-rc{box-shadow:inset 0 3px 0 var(--rc-amarillo),0 0 0 2px var(--riel)}
+.col .s-nob{box-shadow:inset 0 -3px 0 var(--nob-negro),0 0 0 2px var(--riel)}
+.q-RC{box-shadow:inset 0 -4px 0 var(--rc-amarillo),inset 0 0 0 1px var(--riel)}
+.q-NOB{box-shadow:inset 0 -4px 0 var(--nob-negro),inset 0 0 0 1px var(--riel)}
+/* Referencias (cuadradito de color al lado del texto) */
+.dom-lab span:nth-child(1) i{background:var(--rc-pieza)!important}
+.dom-lab span:nth-child(2) i{background:var(--nob-pieza)!important}
+.dom-lab i{box-shadow:0 0 0 1.5px var(--riel)}
+/* Franja del pie: gris en el medio */
+.fbar{height:16px;border-top:3px solid var(--riel);border-bottom:3px solid var(--riel);background:linear-gradient(90deg,transparent calc(50% - 6px),var(--riel) calc(50% - 6px) calc(50% + 6px),transparent calc(50% + 6px)),linear-gradient(90deg,var(--rc-amarillo) 0 50%,var(--nob-negro) 50%) bottom/100% 3px no-repeat,linear-gradient(90deg,var(--rc-azul) 0 50%,var(--nob-rojo) 50%)}
+
+/* ═══ IDENTIDAD B — lo elegido en la prueba de colores (08/10/2026) ═══
+   Newell's: un solo rojo, sin negro como señal. Central: azul con línea amarilla. */
+:root{--nob-texto:#FF1F3A;--nob-pieza:var(--nob-rojo)}
+.dom span,.dom .d-rc,.dom .d-nob,.dom .d-e{box-shadow:none}
+.dom .d-rc{background:var(--rc-azul);box-shadow:inset 0 -3px 0 var(--rc-amarillo)}
+.dom .d-nob{background:var(--nob-rojo)}
+.dom{gap:6px}
+.col .s-rc{box-shadow:inset 0 3px 0 var(--rc-amarillo)}
+.col .s-nob{box-shadow:none}
+.q-RC{box-shadow:inset 0 -3px 0 var(--rc-amarillo)}
+.q-NOB{box-shadow:none}
+.dom-lab i{box-shadow:none}
+.fbar{height:8px;border:0;background:linear-gradient(90deg,var(--rc-azul) 0 calc(50% - 6px),var(--bg) calc(50% - 6px) calc(50% + 6px),var(--nob-rojo) calc(50% + 6px) 100%)}
+
+/* 1 · Un día como hoy (B1) */
+.hoy-c{padding:0 16px 14px;overflow:hidden;box-shadow:none!important}
+.hoy-c .top{display:block;margin:0 -16px 8px;padding:7px 16px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--sup-2);color:var(--txt)}
+.hoy-c.g-RC .top{background:var(--rc-azul);box-shadow:inset 0 -3px 0 var(--rc-amarillo);color:var(--rc-amarillo)}
+.hoy-c.g-NOB .top{background:var(--nob-rojo);color:#fff}
+.hoy-c.g-E .top{background:var(--emp);color:#fff}
+.hoy-c .k{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hoy-c .marc{display:flex;flex-direction:column;margin:2px 0 4px}
+.hoy-c .marc>span{display:flex;align-items:baseline;gap:10px;font-family:var(--f-display);font-size:28px;line-height:1.08;text-transform:uppercase}
+.hoy-c .marc>span>span:first-child{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hoy-c .marc .pierde{color:var(--txt-3)}
+.hoy-c .marc .gol{min-width:24px;text-align:right}
+
+/* 2 · Resumen de las décadas (B1) */
+.ro-row .rc-t,.ro-row .nob-t,.ro-row .emp-t,.ro-verdict .rc-t,.ro-verdict .nob-t{color:var(--txt)}
+.ro-row .bar{height:12px;border-radius:6px;background:var(--sup-2)}
+.ro-row .bar i{border-radius:6px}
+
+/* 4 · La última vez que… (B2) */
+.ult-r{box-shadow:none!important}
+.ult-r .q1::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:8px;vertical-align:-1px;background:var(--emp)}
+.ult-r.g-RC .q1::before{background:var(--rc-azul);box-shadow:inset 0 -3px 0 var(--rc-amarillo)}
+.ult-r.g-NOB .q1::before{background:var(--nob-rojo)}
+.ult-r.nunca .q1::before{display:none}
+
+/* 5 · Los dos clubes lado a lado (opción C) */
+.dec2 .rc,.dec2 .nob{box-shadow:none}
+.dec2 .nob{background:var(--nob-rojo)}
+.dec2 .nob h3{color:#fff}
+.dec2 .rc h4,.dec2 .rc .big1,.dec2 .rc .dl .p,.dec2 .nob h4,.dec2 .nob .big1,.dec2 .nob .dl .p{color:rgba(255,255,255,.8)}
+.dec2 .big1 b{color:#fff}
+.dec2 .dl{gap:0}
+.dec2 .dl li+li{border-top:1px solid rgba(255,255,255,.2)}
+.dec2 .dl button{grid-template-columns:22px minmax(0,1fr) auto 10px;border-radius:6px}
+.dec2 .dl button::after{content:"›";opacity:.65;font-weight:700}
+
+/* 6 · Épocas (B1) */
+.ep-kp .a{background:var(--rc-azul);box-shadow:inset 0 -4px 0 var(--rc-amarillo);color:#fff}
+.ep-kp .e{background:var(--emp);color:#fff}
+.ep-kp .b{background:var(--nob-rojo);color:#fff}
+.ep-v span{color:var(--txt)!important}
+
+/* 7 · Filtros (B1) */
+.chip[data-k]{color:var(--txt)}
+.chip[data-k] .ck{display:inline-block!important;width:12px;height:12px;border:0;border-radius:50%;background:var(--emp)}
+.chip[data-k] .ck svg{display:none}
+.chip[data-k="rc"] .ck{background:var(--rc-azul);box-shadow:inset 0 -3px 0 var(--rc-amarillo)}
+.chip[data-k="nob"] .ck{background:var(--nob-rojo)}
+.chip[data-k][aria-pressed="true"] .ck{background:#fff;box-shadow:none}
+.chip[data-k="rc"][aria-pressed="true"]{background:var(--rc-azul);border-color:var(--rc-azul);color:#fff;box-shadow:inset 0 -4px 0 var(--rc-amarillo)}
+.chip[data-k="nob"][aria-pressed="true"]{background:var(--nob-rojo);border-color:var(--nob-rojo);color:#fff}
+.chip[data-k="e"][aria-pressed="true"]{background:var(--emp);border-color:var(--emp);color:#fff}
+
+/* 8 · Goleadores (B1) */
+.sc-rc,.sc-nob{background:var(--sup);box-shadow:none!important;overflow:hidden}
+.sc-h{margin:-18px -18px 10px;padding:14px 18px 12px}
+.sc-rc .sc-h{background:var(--rc-azul);box-shadow:inset 0 -4px 0 var(--rc-amarillo)}
+.sc-nob .sc-h{background:var(--nob-rojo)}
+.sc-nob .sc-h b,.sc-nob .sc-h span{color:#fff}
+.sc-rc .srow .gl,.sc-nob .srow .gl{color:var(--txt)}
+.sc-rc .tr i{background:var(--rc-azul)}
+#scRc .srow+.srow,#scNob .srow+.srow{border-top:1px solid var(--linea)}
+.srow{border-radius:0}
+.srow::after{content:"›";order:4;color:var(--txt-3);font-weight:700}
+.sc-rc .srow{grid-template-columns:22px minmax(0,1fr) 44px 10px}
+.sc-nob .srow{grid-template-columns:44px minmax(0,1fr) 22px 10px}
+@media (max-width:760px){
+  .sc-nob .srow{grid-template-columns:22px minmax(0,1fr) 44px 10px}
+  .sc-h{margin:-18px -18px 10px}
+}
+
+/* ── Newell's: toque negro en las fichas chicas (como el amarillo de Central) ──
+   El negro va por dentro, con rojo abajo, para que no se pierda contra el fondo. */
+:root{--nob-ficha:linear-gradient(var(--nob-rojo) 0 58%,var(--nob-negro) 58% 78%,var(--nob-rojo) 78%)}
+.q-NOB,.adn-ley .q-NOB{background:var(--nob-ficha)}
+.dom .d-nob{background:var(--nob-ficha)}
+.dom-lab span:nth-child(2) i{background:var(--nob-ficha)!important}
+.ult-r.g-NOB .q1::before{background:var(--nob-ficha)}
+.chip[data-k="nob"] .ck{background:var(--nob-ficha)}
+/* Pie de página: cada mitad con sus dos colores */
+.fbar{height:10px;border:0;background:
+  linear-gradient(90deg,transparent calc(50% - 6px),var(--bg) calc(50% - 6px) calc(50% + 6px),transparent calc(50% + 6px)),
+  linear-gradient(90deg,var(--rc-azul) 0 50%,transparent 50%) top/100% 6px no-repeat,
+  linear-gradient(90deg,var(--rc-amarillo) 0 50%,transparent 50%) bottom/100% 4px no-repeat,
+  linear-gradient(90deg,transparent 0 50%,var(--nob-rojo) 50%) top/100% 6px no-repeat,
+  linear-gradient(90deg,transparent 0 50%,var(--nob-negro) 50%) 0 6px/100% 2px no-repeat,
+  linear-gradient(90deg,transparent 0 50%,var(--nob-rojo) 50%) bottom/100% 2px no-repeat}
+/* Renglones de la lista de Newell's sobre rojo: línea oscura para que se vea */
+.dec2 .nob .dl li+li{border-top:1.5px solid rgba(255,255,255,.45)}
+
+/* ── Newell's como su camiseta: raya negra vertical a 3/4 (ni en el borde ni en el medio) ── */
+:root{
+  --nob-raya:linear-gradient(90deg,var(--nob-rojo) 0 62%,var(--nob-negro) 62% 78%,var(--nob-rojo) 78%);
+  --nob-pieza:linear-gradient(var(--nob-rojo) 0 69%,var(--nob-negro) 69%);
+}
+.q-NOB,.adn-ley .q-NOB{background:var(--nob-raya)}
+.ult-r.g-NOB .q1::before{background:var(--nob-raya)}
+.chip[data-k="nob"] .ck{background:var(--nob-raya)}
+.col .s-nob{background:linear-gradient(90deg,var(--nob-rojo) 0 66%,var(--nob-negro) 66% 76%,var(--nob-rojo) 76%)}
 </style>
 </head>
 <body>
@@ -1650,7 +1797,7 @@ function renderReadout(){
   else if(d.nob>d.rc) ver = `<b class="nob-t">Dominó Newell's</b> por ${d.nob-d.rc}.`;
   else ver = `<b>Mano a mano</b>: igualados en victorias.`;
   ro.innerHTML = `<div><div class="ro-k">${kick}</div><div class="ro-t">${titulo}</div></div>
-    <div class="ro-rows">${row("Ganó Central","rc-t",d.rc,"var(--rc-amarillo)")}${row("Empates","emp-t",d.e,"var(--emp-texto)")}${row("Ganó Newell's","nob-t",d.nob,"var(--nob-rojo)")}</div>
+    <div class="ro-rows">${row("Ganó Central","rc-t",d.rc,"var(--rc-azul);box-shadow:inset 0 -4px 0 var(--rc-amarillo)")}${row("Empates","emp-t",d.e,"var(--emp)")}${row("Ganó Newell's","nob-t",d.nob,"var(--nob-rojo)")}</div>
     <div class="ro-verdict">${ver}<br><span style="font-size:13px">${decSel==null?"Tocá una columna para ver su detalle.":"Tocá de nuevo la columna para ver sus partidos."}</span></div>`;
 }
 
@@ -2671,7 +2818,12 @@ function renderHoy(){
   const el = $("#hoyOut"); if(!el) return;
   const mm = String(HOY.getMonth()+1).padStart(2,"0"), dd = String(HOY.getDate()).padStart(2,"0");
   const fechaHoy = `${+dd} de ${MESES[+mm-1]}`;
-  const card = m => { const L=localDe(m), h=haceTxt(m); return `<article class="hoy-c tapc g-${m.g}"${attrP(m)}><span class="k">${m.a} · hace ${h.n} ${h.u}</span><span class="v">${esc(etiqueta(m))}</span><p>${esc(m.c)}${m.pen?` · penales ${esc(m.pen)}`:""}</p>${SHR(`Un día como hoy, ${m.fx}: ${etiqueta(m)} (${m.c}).`)}${GO}</article>`; };
+  const card = m => { const L=localDe(m), h=haceTxt(m);
+    const top = m.g==="RC"?"Ganó Central":m.g==="NOB"?"Ganó Newell's":m.g==="E"?"Empate":"Sin resultado";
+    const dec = m.g==="RC"||m.g==="NOB", lw = (m.g==="RC"&&L.lk==="rc")||(m.g==="NOB"&&L.lk==="nob");
+    const gl = v => (v==null||v==="")?"–":v;
+    const fila = (n,g,pierde) => `<span${pierde?' class="pierde"':''}><span>${n}</span><span class="gol">${gl(g)}</span></span>`;
+    return `<article class="hoy-c tapc g-${m.g}"${attrP(m)}><span class="top">${top}</span><span class="k">${m.a} · hace ${h.n} ${h.u}</span><span class="marc" role="text" aria-label="${esc(etiqueta(m))}">${fila(L.ln,L.lg,dec&&!lw)}${fila(L.vn,L.vg,dec&&lw)}</span><p>${esc(m.c)}${m.pen?` · penales ${esc(m.pen)}`:""}</p>${SHR(`Un día como hoy, ${m.fx}: ${etiqueta(m)} (${m.c}).`)}${GO}</article>`; };
   const hoy = DATA.filter(m=>m.f.slice(5)===`${mm}-${dd}`).sort(cronDesc);
   let html = "";
   if(hoy.length){
