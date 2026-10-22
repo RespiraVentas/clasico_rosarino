@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Revisión del Excel del Clásico Rosarino</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#F6F5F1;--card:#FFFFFF;--line:#DAD8D0;--txt:#1C1C1A;--txt2:#55544F;--acc:#1F4FB5;--ok:#1E7A3C;--err:#B3261E;--otro:#7A5A00}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;font-size:16px;line-height:1.45}
+.wrap{max-width:860px;margin:0 auto;padding:24px 16px 120px}
+h1{font-size:26px;margin:0 0 6px}
+.intro{color:var(--txt2);margin:0 0 16px}
+.quien{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:22px}
+.quien label{font-weight:700;display:block;margin-bottom:6px}
+input[type=text],textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--txt)}
+textarea{min-height:70px;resize:vertical;margin-top:8px}
+h2{font-size:18px;margin:30px 0 4px;text-transform:uppercase;letter-spacing:.04em}
+h2 small{display:block;text-transform:none;letter-spacing:0;font-weight:400;color:var(--txt2);font-size:14px}
+h3{font-size:15px;margin:18px 0 6px;color:var(--txt2)}
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+.item .t{font-weight:700}
+.item .d{color:var(--txt2);margin-top:4px}
+.item ul{margin:6px 0 0 18px;padding:0;color:var(--txt2)}
+.ops{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ops button{font:inherit;font-weight:700;min-height:44px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--txt);cursor:pointer}
+.ops button[aria-pressed="true"]{color:#fff}
+.ops .si[aria-pressed="true"]{background:var(--err);border-color:var(--err)}
+.ops .no[aria-pressed="true"]{background:var(--ok);border-color:var(--ok)}
+.ops .ot[aria-pressed="true"]{background:var(--otro);border-color:var(--otro)}
+.ops .limpiar{border:0;background:transparent;color:var(--txt2);font-weight:600;text-decoration:underline;padding:8px 6px}
+.item.respondido{border-left:6px solid var(--txt)}
+.nota{display:none}
+.item.con-nota .nota{display:block}
+.barra{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px;box-shadow:0 -4px 14px rgba(0,0,0,.06)}
+.barra .in{max-width:860px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.barra .prog{font-weight:700;margin-right:auto}
+.barra button{font:inherit;font-weight:700;min-height:44px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--txt);background:#fff;color:var(--txt);cursor:pointer}
+.barra button.prim{background:var(--txt);color:#fff}
+.aviso{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--txt);color:#fff;padding:10px 16px;border-radius:10px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+.aviso.ver{opacity:1}
+.como{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:30px;color:var(--txt2)}
+.como b{color:var(--txt)}
+.otras{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.otras button{font:inherit;font-weight:700;min-height:44px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--txt);background:#fff;color:var(--txt);cursor:pointer}
+@media (max-width:600px){.barra .prog{width:100%;font-size:14px}.barra button{flex:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Revisión del Excel del Clásico Rosarino</h1>
+  <p class="intro">Una revisión automática encontró estos posibles errores. Para cada uno marcá <b>"Sí, es error"</b>, <b>"No, está bien"</b> u <b>"Otro"</b> (y escribí lo que quieras). Lo que marques se guarda en este navegador. Al terminar, tocá <b>"Enviar por WhatsApp"</b> abajo de todo.</p>
+
+  <div class="quien">
+    <label for="nombre">Tu nombre</label>
+    <input type="text" id="nombre" placeholder="Para saber quién respondió">
+  </div>
+
+  <div id="lista"></div>
+
+  <div class="como">
+    <b>Otras formas de mandar las respuestas</b> (si WhatsApp no te funciona):
+    <div class="otras">
+      <button type="button" id="bMail">Enviar por mail</button>
+      <button type="button" id="bCopiar">Copiar respuestas</button>
+      <button type="button" id="bBajar">Descargar respuestas</button>
+    </div>
+  </div>
+</div>
+
+<div class="barra"><div class="in">
+  <span class="prog" id="prog">0 de 0 respondidos</span>
+  <button type="button" id="bGuardar">Guardar</button>
+  <button type="button" class="prim" id="bWa">Enviar por WhatsApp</button>
+</div></div>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const MAIL = "revistarespiraok@gmail.com";
+const GRUPOS = [{"g": "Errores claros", "s": "Lo más importante", "items": [{"h": "Todos los Clásicos V2"}, {"t": "Fila 170 (30/06/1968)", "d": "Dice Newell's como Local y también como Visitante. El Visitante debería ser Central.", "id": "p1"}, {"t": "Fila 369 (22/07/1906)", "d": "Falta una coma en \"Manuel González (x3) José Viale\". Así como está, cuenta 5 goleadores para un 6-0.", "id": "p2"}, {"t": "Fila 55 (07/03/1999, 4-1)", "d": "Falta el goleador de Central.", "id": "p3"}, {"t": "Las fechas son texto, no fechas reales", "d": "En las 371 filas. Por eso el orden dentro de cada año sale mal: va por el día, no por la fecha completa. Ejemplo de 1975: 06/04, 11/04, 20/07, 21/03… Tampoco se puede filtrar ni ordenar por fecha como corresponde.", "id": "p4"}, {"h": "Resumen por Competencia"}, {"t": "Le falta el Torneo Clausura 2026", "d": "(fila 3 de datos, 1-1). Por eso el resumen suma 370 partidos contra los 371 de los datos, y le falta un gol a cada equipo (554/470 contra 555/471).", "id": "p5"}, {"t": "Son todos valores fijos, no hay ni una fórmula", "d": "No se actualiza cuando agregás partidos, y por eso quedó afuera el de 2026.", "id": "p6"}, {"t": "Los penales se cuentan distinto en cada hoja", "d": "En los datos estos partidos figuran como Empate, pero el resumen los cuenta como victoria:", "l": ["Copa Santa Fe 2016: en el resumen, NOB 1", "Copa Gral. Perón: en el resumen, RC 1", "Copa Revancha: en el resumen, NOB 1"], "id": "p7"}]}, {"g": "Para verificar (puede ser real o un error)", "s": "", "items": [{"t": "El Estadio no coincide con el Local", "d": "En las filas 64 (1996), 117 (1978), 119 (1977), 300 (1930), 307 (1929), 340 (1916) y 371 (1905). Por ejemplo, en la fila 64 el estadio es Central pero el local es Newell's. En 1977/78 podría ser real, por las obras del Mundial.", "id": "p8"}, {"t": "Dos partidos el mismo día, 27/05/1917", "d": "La fila 336 es oficial y figura como no jugado, y la 337 es un amistoso.", "id": "p9"}, {"t": "Hay competencias de un año jugadas al año siguiente", "d": "Fila 314 (Copa Estímulo 1925, jugada el 10/01/1926) y fila 326 (Nicasio Vila 1919, jugada el 11/01/1920). Probablemente estén bien, porque son una final y un desempate.", "id": "p10"}, {"t": "Hay partidos con goles pero sin goleadores", "d": "Filas 168, 186, 220, 226, 241, 242, 248, 258, 259, 266, 281, 329, 339, 341, 348, 368 y 371. La fila 343 dice \"(sin datos)\", mientras que las demás quedan vacías.", "id": "p11"}, {"t": "Fila 368 (1907)", "d": "El Estadio está vacío.", "id": "p12"}]}, {"g": "Inconsistencias de formato o criterio", "s": "No cambian resultados, pero conviene unificar", "items": [{"t": "Los penales están escritos de dos formas", "d": "\"0-0 (p.3-5)\" y \"1(6)-1(7)\".", "id": "p13"}, {"t": "La columna Ganador mezcla categorías", "d": "Aparecen \"RC (incomparecencia rival)\" y \"NOB (incomparecencia rival)\". Si filtrás por \"RC\" no los vas a ver. Además, en el resumen van a \"Otros\" aunque son victorias.", "id": "p14"}, {"t": "La fecha del torneo está en lugares distintos", "d": "A veces en Instancia (\"6ª fecha\", \"4ª fecha\"; filas 262, 267, 273, 278, 286, 289, 290 y 320) y a veces en Nro Fecha.", "id": "p15"}, {"t": "Mayúsculas distintas", "d": "\"Primera fase\" y \"Primera Fase\".", "id": "p16"}, {"t": "Años de temporada escritos distinto", "d": "\"1988-89\" y \"1988/89\".", "id": "p17"}, {"t": "Los goles en contra se marcan de tres formas", "d": "(a.g.), (e.c.) y, en la fila 315, (e.g.).", "id": "p18"}, {"t": "El mismo jugador escrito de distintas formas", "d": "(posibles duplicados):", "l": ["José Fabrini / José Fabbrini", "Ennis Hayes / Ernesto Hayes", "Plinio Guiribaldi / Ghiribaldi", "Eduardo Bellotti / Juan Emilio Bellotti"], "id": "p19"}, {"t": "Tildes", "d": "\"Muñóz\" debería ser Muñoz, y faltan en \"Joaquin\" y \"Felix\". \"Rodrígues\" aparece repetido (hay que ver si es un apellido brasileño).", "id": "p20"}, {"t": "Nombres de goleadores con distinto detalle", "d": "En 2001–2010 hay iniciales (\"R. Schiavi\", \"D. Braghieri\") y solo los partidos de 2026 tienen los minutos.", "id": "p21"}, {"t": "Estadios neutrales", "d": "\"Central Córdoba\" no lleva \"(Rosario)\" como los otros, y se puede confundir con \"Central\".", "id": "p22"}, {"t": "Columna Otros del resumen", "d": "Está vacía en vez de tener 0.", "id": "p23"}]}];
+const KEY="revision-39b06bd794";
+let R={}; try{ R=JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(e){ R={}; }
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const TODOS=[]; GRUPOS.forEach(G=>G.items.forEach(i=>{ if(i.id){ i.grupo=G.g; TODOS.push(i);} }));
+
+function pintar(){
+  $("#lista").innerHTML = GRUPOS.map(G=>`<h2>${G.g}<small>${G.s}</small></h2>`+G.items.map(i=> i.h ? `<h3>${i.h}</h3>` :
+   `<div class="item" id="it-${i.id}"><div class="t">${esc(i.t)}</div>${i.d?`<div class="d">${esc(i.d)}</div>`:""}${i.l?`<ul>${i.l.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
+    <div class="ops">
+      <button type="button" class="si" data-id="${i.id}" data-v="si" aria-pressed="false">Sí, es error</button>
+      <button type="button" class="no" data-id="${i.id}" data-v="no" aria-pressed="false">No, está bien</button>
+      <button type="button" class="ot" data-id="${i.id}" data-v="otro" aria-pressed="false">Otro</button>
+      <button type="button" class="limpiar" data-id="${i.id}" data-v="" hidden>Borrar respuesta</button>
+    </div>
+    <div class="nota"><textarea data-nota="${i.id}" placeholder="Escribí lo que quieras (opcional en Sí o No; para Otro, contá qué pasa)"></textarea></div>
+   </div>`).join("")).join("");
+  $("#nombre").value = R._nombre||"";
+  TODOS.forEach(i=>{ const ta=document.querySelector(`[data-nota="${i.id}"]`); ta.value=(R[i.id]&&R[i.id].n)||""; marcar(i.id); });
+  progreso();
+}
+function marcar(id){
+  const v=(R[id]&&R[id].v)||"", it=$("#it-"+id);
+  it.querySelectorAll(".ops button[data-v]").forEach(b=>{ if(b.dataset.v) b.setAttribute("aria-pressed", b.dataset.v===v?"true":"false"); });
+  it.querySelector(".limpiar").hidden = !v;
+  it.classList.toggle("respondido", !!v);
+  it.classList.toggle("con-nota", !!v || !!(R[id]&&R[id].n));
+}
+function progreso(){ const n=TODOS.filter(i=>R[i.id]&&R[i.id].v).length; $("#prog").textContent=`${n} de ${TODOS.length} respondidos`; }
+function guardar(aviso){ try{ localStorage.setItem(KEY, JSON.stringify(R)); if(aviso) avisar("Guardado"); }catch(e){ if(aviso) avisar("No se pudo guardar en este navegador. Usá Copiar o Descargar."); } }
+function avisar(t){ const a=$("#aviso"); a.textContent=t; a.classList.add("ver"); clearTimeout(a._t); a._t=setTimeout(()=>a.classList.remove("ver"),2200); }
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest(".ops button[data-id]"); if(!b) return;
+  const id=b.dataset.id; R[id]=R[id]||{};
+  R[id].v = b.dataset.v;
+  if(!R[id].v && !R[id].n) delete R[id];
+  marcar(id); progreso(); guardar(false);
+  if(b.dataset.v==="otro"){ const ta=document.querySelector(`[data-nota="${id}"]`); ta.focus(); }
+});
+document.addEventListener("input",e=>{
+  const id=e.target.dataset.nota;
+  if(id){ R[id]=R[id]||{}; R[id].n=e.target.value; guardar(false); }
+  if(e.target.id==="nombre"){ R._nombre=e.target.value; guardar(false); }
+});
+
+const ROT={si:"SÍ, ES ERROR",no:"NO, ESTÁ BIEN",otro:"OTRO"};
+function texto(){
+  const nom=(R._nombre||"").trim();
+  let out=`${document.title.toUpperCase()}\n${nom?"Respondió: "+nom+"\n":""}`;
+  let grupo="";
+  TODOS.forEach((i,k)=>{
+    if(i.grupo!==grupo){ grupo=i.grupo; out+=`\n== ${grupo.toUpperCase()} ==\n`; }
+    const r=R[i.id]||{};
+    out+=`${k+1}. ${i.t}: ${r.v?ROT[r.v]:"(sin responder)"}${r.n&&r.n.trim()?" — "+r.n.trim():""}\n`;
+  });
+  return out;
+}
+$("#bGuardar").onclick=()=>guardar(true);
+$("#bCopiar").onclick=async()=>{ try{ await navigator.clipboard.writeText(texto()); avisar("Respuestas copiadas"); }catch(e){ const t=document.createElement("textarea"); t.value=texto(); document.body.appendChild(t); t.select(); try{document.execCommand("copy"); avisar("Respuestas copiadas");}catch(_){avisar("No se pudo copiar");} t.remove(); } };
+$("#bBajar").onclick=()=>{ const blob=new Blob([texto()],{type:"text/plain;charset=utf-8"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="Respuestas - "+document.title+".txt"; document.body.appendChild(a); a.click(); a.remove(); };
+$("#bWa").onclick=()=>{ window.open("https://wa.me/?text="+encodeURIComponent(texto()),"_blank"); };
+$("#bMail").onclick=()=>{ location.href="mailto:"+MAIL+"?subject="+encodeURIComponent(document.title)+"&body="+encodeURIComponent(texto()); };
+pintar();
+</script>
+</body>
+</html>
