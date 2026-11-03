@@ -1,0 +1,14 @@
+{
+  "name": "clasico-rosarino-tests",
+  "private": true,
+  "description": "Tests automáticos del sitio Clásico Rosarino. Nada de esta carpeta lo usa la página publicada.",
+  "scripts": {
+    "test": "playwright test",
+    "verificar": "playwright test --project=datos-y-links",
+    "navegador": "playwright test --project=escritorio --project=celular",
+    "reporte": "playwright show-report informe"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}
