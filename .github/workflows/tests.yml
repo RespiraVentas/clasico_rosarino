@@ -1,0 +1,60 @@
+# Corre los tests automáticos del sitio en cada pull request.
+#
+# - NO corre cuando el dueño actualiza la web directo en la rama principal
+#   (no hay "on: push"), así que nunca demora ni frena esas actualizaciones.
+# - NO publica nada y NO escribe en el repositorio (permiso de solo lectura).
+# - Si falla, solo muestra una cruz roja en el pull request; no impide mergear
+#   salvo que alguien lo configure a propósito en Settings > Branches.
+#
+# Explicación completa en TESTS.md.
+
+name: Tests del sitio
+
+on:
+  pull_request:
+  workflow_dispatch: # permite correrlo a mano desde la pestaña "Actions"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Datos, links y navegador (escritorio y celular)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: tests
+    steps:
+      - name: Bajar el código
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+
+      - name: Instalar herramientas de test
+        run: npm ci
+
+      - name: Instalar el navegador
+        run: npx playwright install --with-deps chromium
+
+      - name: Correr los tests
+        run: npx playwright test
+
+      - name: Guardar el informe (se descarga desde la ejecución)
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: informe-de-tests
+          path: tests/informe/
+          retention-days: 14
