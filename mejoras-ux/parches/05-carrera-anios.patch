@@ -1,0 +1,59 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Auditor=C3=ADa=20UX?= <ux@local>
+Date: Tue, 3 Nov 2026 02:27:23 +0000
+Subject: [PATCH 5/7] =?UTF-8?q?La=20carrera:=20los=20a=C3=B1os=20del=20eje?=
+ =?UTF-8?q?=20ya=20no=20se=20pisan=20en=20celular=20y=20tablet?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+En 360–768 px se leía «20002020» y «19001920» porque las décadas con pocos partidos
+quedan muy juntas. Se ocultan los años intermedios que no entran (el primero y el
+último quedan siempre) y se recalcula al girar o cambiar el ancho.
+---
+ index.html | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/index.html b/index.html
+index 5a89ddb..133192c 100644
+--- a/index.html
++++ b/index.html
+@@ -651,6 +651,7 @@ dialog.ficha::backdrop{background:rgba(0,0,0,.7)}
+ .fact.tap,.cur.tapc{padding-right:32px}
+ .car-yrs span.tap{padding:2px 4px;text-decoration:none;color:var(--txt-2);border-radius:6px;cursor:pointer}
+ .car-yrs span.tap:hover{background:var(--sup-2);color:var(--txt)}
++.car-yrs span.apr{visibility:hidden}
+ .car-plot{cursor:pointer}
+ .ro-more{margin-top:4px}
+ .tlink{border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;text-decoration-color:var(--txt-3)}
+@@ -2076,7 +2077,7 @@ function renderCarrera(list){
+     </svg>
+     <span class="car-lab t rc-t">▲ Manda Central</span><span class="car-lab b nob-t">▼ Manda Newell's</span>
+     <div class="car-dot" id="carDot"></div><div class="car-tip" id="carTip"></div>`;
+-  yrs.innerHTML = labs;
++  yrs.innerHTML = labs; carYrsAjustar();
+   plot.setAttribute("aria-label", `Gráfico de la carrera del historial: hoy ${d>0?"Central +"+d:d<0?"Newell's +"+(-d):"igualados"}. Usá las flechas para recorrerlo.`);
+   carState = {cr, pts, n, X, Y, W, H, i:null};
+   // datos
+@@ -2093,6 +2094,21 @@ function renderCarrera(list){
+   F.push(`<div class="fact${cambios?" tap":""}"${attrL("Partidos en que cambió el líder", "Después de cada uno, el historial pasó a manos del otro", camLs, true)}><span class="fn">${cambios}</span><p><b>${cambios===1?"Vez":"Veces"} que cambió el líder</b> del historial.</p>${cambios?GO:""}</div>`);
+   facts.innerHTML = F.join("");
+ }
++/* Años del eje: si dos quedan pegados (pasa en celular con las décadas de pocos partidos),
++   se oculta el del medio para que no se lea "20002020". El primero y el último quedan
++   siempre. Se recalcula al cambiar el ancho de la pantalla. */
++function carYrsAjustar(){
++  const sp = $$("#carYrs span"); sp.forEach(s=>s.classList.remove("apr"));
++  const vis = sp.filter(s=>s.offsetWidth); if(vis.length<3) return;
++  const ult = vis[vis.length-1].getBoundingClientRect().left;
++  let der = vis[0].getBoundingClientRect().right;
++  for(let i=1;i<vis.length-1;i++){
++    const r = vis[i].getBoundingClientRect();
++    if(r.left < der+2 || r.right > ult-2){ vis[i].classList.add("apr"); continue; }
++    der = r.right;
++  }
++}
++{ let t; window.addEventListener("resize", ()=>{ clearTimeout(t); t = setTimeout(carYrsAjustar, 150); }); }
+ function carMostrar(i){
+   const c = carState; if(!c) return;
+   i = Math.max(1, Math.min(c.n, i)); c.i = i;
