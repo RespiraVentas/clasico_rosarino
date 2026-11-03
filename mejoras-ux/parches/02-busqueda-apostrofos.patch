@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Auditor=C3=ADa=20UX?= <ux@local>
+Date: Tue, 3 Nov 2026 02:23:44 +0000
+Subject: [PATCH 2/7] =?UTF-8?q?Buscadores:=20encontrar=20=C2=ABNewell?=
+ =?UTF-8?q?=E2=80=99s=C2=BB=20escrito=20con=20ap=C3=B3strofo=20de=20celula?=
+ =?UTF-8?q?r,=20sin=20ap=C3=B3strofo=20o=20con=20guion=20largo?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+El teclado del iPhone (y muchos Android) escribe ’ en lugar de ', así que buscar
+«Newell’s» daba 0 resultados (con ' daba 180). Ahora la normalización de búsqueda
+quita los apóstrofos y unifica los guiones, en los tres buscadores (partidos,
+goleadores y filtro del panel).
+---
+ index.html | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/index.html b/index.html
+index ee060f5..4f6cf31 100644
+--- a/index.html
++++ b/index.html
+@@ -1503,7 +1503,9 @@ const MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto"
+ const fmt = n => Number(n).toLocaleString("es-AR");
+ const fmt2 = n => Number(n).toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2});
+ const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+-const norm = s => String(s??"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
++/* Para buscar: sin tildes, sin mayúsculas, sin apóstrofos (el celular escribe ’ en vez de ')
++   y con un solo tipo de guion, así "Newell’s", "newells" y "1–0" encuentran lo mismo. */
++const norm = s => String(s??"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/['’‘`´]/g,"").replace(/[‐‑‒–—−]/g,"-");
+ const NOM = {RC:"Central",NOB:"Newell's"};
+ const decOf = m => (m.dec!=null && m.dec!=="") ? +m.dec : Math.floor(+m.a/10)*10;
+ const lista = (x)=>Array.isArray(x)?x:[];
