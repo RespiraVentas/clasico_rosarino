@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Plantilla: el programa reemplaza __DIRECCION_DEL_SITIO__ por la dirección del sitio
+     (la misma de og:url, terminada en "/") y guarda el resultado como sitemap.xml en la raíz.
+     Solo va la página principal: /prueba/ y /revision/ no deben aparecer en buscadores. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>__DIRECCION_DEL_SITIO__</loc>
+  </url>
+</urlset>

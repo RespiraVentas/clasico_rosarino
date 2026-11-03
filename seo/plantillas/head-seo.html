@@ -1,0 +1,65 @@
+<!--
+  BLOQUE SEO PARA LA PLANTILLA DE LA PÁGINA (no es una página: no se publica sola).
+
+  Dónde va: dentro de <head> de la plantilla que usa "Actualizar web.bat",
+  justo debajo de <meta name="description" ...>.
+
+  Único valor a completar: __DIRECCION_DEL_SITIO__
+  Es la misma dirección que el programa ya escribe en og:url (terminada en "/").
+  Hoy es https://respiraventas.github.io/clasico_rosarino/ ; cuando haya dominio propio,
+  cambia solo ese valor en el programa y se actualiza todo junto.
+
+  Solo para la versión principal. En /prueba/ NO va este bloque
+  (la prueba ya lleva <meta name="robots" content="noindex">).
+
+  Más detalle: AUDITORIA-DATOS-SEO.md, secciones "Dirección del sitio" y "SEO".
+-->
+<link rel="canonical" href="__DIRECCION_DEL_SITIO__">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="twitter:title" content="Clásico Rosarino · El historial completo">
+<meta name="twitter:description" content="Central vs Newell's desde 1905: todos los partidos, récords y goleadores.">
+<meta name="twitter:image" content="__DIRECCION_DEL_SITIO__compartir.png">
+<meta name="twitter:image:alt" content="Clásico Rosarino: Rosario Central vs Newell's Old Boys">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "__DIRECCION_DEL_SITIO__#sitio",
+      "url": "__DIRECCION_DEL_SITIO__",
+      "name": "Clásico Rosarino",
+      "alternateName": "Historial del Clásico Rosarino",
+      "inLanguage": "es-AR"
+    },
+    {
+      "@type": "Dataset",
+      "@id": "__DIRECCION_DEL_SITIO__#historial",
+      "url": "__DIRECCION_DEL_SITIO__",
+      "name": "Historial del Clásico Rosarino: Rosario Central vs Newell's Old Boys",
+      "description": "Todos los partidos entre Rosario Central y Newell's Old Boys desde 1905: fecha, competencia, instancia, estadio, resultado, penales y goleadores de cada clásico, con balance, récords y estadísticas por década, torneo y cancha.",
+      "inLanguage": "es-AR",
+      "isAccessibleForFree": true,
+      "temporalCoverage": "1905/..",
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Rosario, Santa Fe, Argentina"
+      },
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isBasedOn": "https://es.wikipedia.org/wiki/Cl%C3%A1sico_rosarino",
+      "keywords": [
+        "Clásico Rosarino",
+        "Rosario Central",
+        "Newell's Old Boys",
+        "historial",
+        "fútbol argentino"
+      ],
+      "about": [
+        { "@type": "SportsTeam", "name": "Rosario Central", "sport": "Fútbol" },
+        { "@type": "SportsTeam", "name": "Newell's Old Boys", "sport": "Fútbol" }
+      ],
+      "isPartOf": { "@id": "__DIRECCION_DEL_SITIO__#sitio" }
+    }
+  ]
+}
+</script>
