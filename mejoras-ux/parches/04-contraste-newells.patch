@@ -1,0 +1,30 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Auditor=C3=ADa=20UX?= <ux@local>
+Date: Tue, 3 Nov 2026 02:26:16 +0000
+Subject: [PATCH 4/7] =?UTF-8?q?Contraste:=20texto=20chico=20en=20blanco=20?=
+ =?UTF-8?q?pleno=20sobre=20el=20rojo=20de=20Newell's=20(Goles=20que=20vali?=
+ =?UTF-8?q?eron=20un=20cl=C3=A1sico)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Subtítulos, renglones y nombres de la columna de Newell's quedaban en 3,4:1 y 4,3:1,
+por debajo del mínimo 4,5:1. Se pasa a #fff solo en esa columna; el rojo no cambia.
+---
+ index.html | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/index.html b/index.html
+index b3d35bb..5a89ddb 100644
+--- a/index.html
++++ b/index.html
+@@ -1100,6 +1100,9 @@ html.pn-on .flot{display:none}
+   linear-gradient(90deg,transparent 0 50%,var(--nob-rojo) 50%) bottom/100% 2px no-repeat}
+ /* Renglones de la lista de Newell's sobre rojo: línea oscura para que se vea */
+ .dec2 .nob .dl li+li{border-top:1.5px solid rgba(255,255,255,.45)}
++/* Texto chico sobre el rojo de Newell's: blanco pleno para llegar al contraste mínimo (AA 4,5:1).
++   Con blanco al 80 % o #F2F2F2 quedaba en 3,4:1 y 4,3:1. */
++.dec2 .nob h4,.dec2 .nob .big1,.dec2 .nob .dl .p,.dec2 .nob .dl button{color:#fff}
+ 
+ /* ── Newell's como su camiseta: raya negra vertical a 3/4 (ni en el borde ni en el medio) ── */
+ :root{

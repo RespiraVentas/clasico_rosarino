@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Auditor=C3=ADa=20UX?= <ux@local>
+Date: Tue, 3 Nov 2026 02:25:59 +0000
+Subject: [PATCH 3/7] =?UTF-8?q?Panel=20de=20datos:=20el=20foco=20del=20tec?=
+ =?UTF-8?q?lado=20ya=20no=20se=20escapa=20detr=C3=A1s=20del=20panel?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+El panel que se abre al tocar cualquier dato se anuncia como modal (aria-modal), pero con
+Tab se podía seguir navegando por la página de atrás sin verla. Ahora, mientras está
+abierto, el resto de la página queda inerte (atributo inert) y al cerrarlo se libera y el
+foco vuelve al dato que lo abrió, como antes.
+---
+ index.html | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/index.html b/index.html
+index 4f6cf31..b3d35bb 100644
+--- a/index.html
++++ b/index.html
+@@ -2482,10 +2482,13 @@ window.addEventListener("popstate", e=>{
+   const n = (e.state && e.state.sh) || 0;
+   if(n < SH.st.length){ SH.st.length = n; shDibujar(); }
+ });
++/* Mientras el panel está abierto, el resto de la página queda inerte: el foco del teclado
++   y los lectores de pantalla no se escapan detrás del panel. */
++function shInerte(on){ [...document.body.children].forEach(el=>{ if(el.id!=="sh" && el.tagName!=="SCRIPT" && el.tagName!=="DIALOG") el.inert = on; }); }
+ function shDibujar(){
+   const sh = $("#sh");
+   if(!SH.st.length){
+-    sh.hidden = true; document.documentElement.classList.remove("pn-on");
++    sh.hidden = true; document.documentElement.classList.remove("pn-on"); shInerte(false);
+     if(SH.foco && document.contains(SH.foco)) SH.foco.focus({preventScroll:true});
+     return;
+   }
+@@ -2501,7 +2504,7 @@ function shDibujar(){
+   $("#shX").textContent = SH.st.length>1 ? "Cerrar todo ✕" : "Cerrar ✕";
+   const body = $("#shBody");
+   body.innerHTML = r.html; body.scrollTop = 0;
+-  sh.hidden = false; document.documentElement.classList.add("pn-on");
++  sh.hidden = false; document.documentElement.classList.add("pn-on"); shInerte(true);
+   const t = $("#shT"); if(t) t.focus({preventScroll:true});
+   if(r.after) r.after(body);
+ }

@@ -1,0 +1,29 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Auditor=C3=ADa=20UX?= <ux@local>
+Date: Tue, 3 Nov 2026 02:27:51 +0000
+Subject: [PATCH 7/7] =?UTF-8?q?Accesibilidad:=20el=20resumen=20de=20d?=
+ =?UTF-8?q?=C3=A9cadas=20deja=20de=20ser=20<aside>?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+El cuadro de lectura de «Década por década» estaba marcado como <aside> (región
+complementaria) dentro de la sección, y los lectores de pantalla lo anunciaban como una
+región aparte de la página. Pasa a <div>; los estilos usan la clase .readout y no cambian.
+---
+ index.html | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/index.html b/index.html
+index 3f987a0..c0ab2c6 100644
+--- a/index.html
++++ b/index.html
+@@ -1260,7 +1260,7 @@ main:focus{outline:none}
+         <div class="dom" id="dom" aria-hidden="true"></div>
+         <div class="dom-lab"><span><i style="background:var(--rc-azul)"></i>Década de Central</span><span><i style="background:var(--nob-rojo)"></i>Década de Newell's</span><span><i style="background:var(--emp)"></i>Pareja</span></div>
+       </div>
+-      <aside class="readout" id="readout"></aside>
++      <div class="readout" id="readout"></div>
+     </div>
+     <div class="facts" id="facts"></div>
+     <div class="anios" id="anios" data-sec="anios"><div class="anios-h"><h3 class="anios-t">Año por año</h3><button type="button" class="shr sec-shr" data-share="El Clásico Rosarino año por año. Buscá el año que quieras:" aria-label="Compartir esta sección"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 9v4.5h10V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compartir</button></div><p class="anios-s">Cada año, del color de quien ganó más clásicos. Tocá uno para ver sus partidos.</p><div id="aniosOut"></div></div>

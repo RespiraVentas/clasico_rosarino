@@ -1,0 +1,49 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Auditor=C3=ADa=20UX?= <ux@local>
+Date: Tue, 3 Nov 2026 02:22:54 +0000
+Subject: [PATCH 1/7] =?UTF-8?q?Desglose=20por=20=C3=A1mbito:=20mostrar=20P?=
+ =?UTF-8?q?J/Central/Emp./Newell's/Goles=20en=20celular=20en=20lugar=20de?=
+ =?UTF-8?q?=20c=C3=B3digos=20internos=20(L370=E2=80=A6)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Las etiquetas de las tarjetas usaban el atributo data-l, el mismo que usa el sistema de
+'todo clickeable' para guardar la lista de partidos. Al decorar la tabla, ese atributo se
+pisaba con la clave interna y en anchos ≤860 px se veía 'L370', 'L366', etc. Además, tocar
+la celda de Goles abría un panel con 'Esta lista ya no está disponible'.
+Se renombra el atributo de la etiqueta a data-cap.
+---
+ index.html | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/index.html b/index.html
+index a6c19a1..ee060f5 100644
+--- a/index.html
++++ b/index.html
+@@ -435,7 +435,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+   table.amb,table.amb tbody,table.amb tr,table.amb td{display:block}
+   table.amb tr.r{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 10px;background:var(--sup);border-radius:var(--r);padding:14px;margin-bottom:8px}
+   table.amb td{padding:0;border:0;text-align:left}
+-  table.amb td[data-l]::before{content:attr(data-l);display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-3)}
++  table.amb td[data-cap]::before{content:attr(data-cap);display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-3)}
+   table.amb td.an{grid-column:1/4}
+   table.amb td.pj{grid-column:4;text-align:right}
+   table.amb td.pj::before{text-align:right}
+@@ -1835,11 +1835,11 @@ function renderAmbitos(s){
+     const x = Math.max(0,a.pj-a.rc-a.e-a.nob);
+     return `<tr class="r">
+       <td class="an">${esc(a.am)}</td>
+-      <td class="pj" data-l="PJ">${a.pj}</td>
+-      <td class="rc-t" data-l="Central">${a.rc}</td>
+-      <td class="emp-t" data-l="Emp.">${a.e}</td>
+-      <td class="nob-t" data-l="Newell's">${a.nob}</td>
+-      <td data-l="Goles"><span class="rc-t">${a.grc}</span>–<span class="nob-t">${a.gnob}</span></td>
++      <td class="pj" data-cap="PJ">${a.pj}</td>
++      <td class="rc-t" data-cap="Central">${a.rc}</td>
++      <td class="emp-t" data-cap="Emp.">${a.e}</td>
++      <td class="nob-t" data-cap="Newell's">${a.nob}</td>
++      <td data-cap="Goles"><span class="rc-t">${a.grc}</span>–<span class="nob-t">${a.gnob}</span></td>
+       <td class="cm"><div class="mini" role="img" aria-label="Central ${a.rc}, empates ${a.e}, Newell's ${a.nob}${x?`, ${x} sin resultado`:""}">
+         <i class="a" style="flex-grow:${a.rc}"></i><i class="e" style="flex-grow:${a.e}"></i><i class="b" style="flex-grow:${a.nob}"></i>${x?`<i class="x" style="flex-grow:${x}"></i>`:""}</div></td>
+     </tr>`;}).join("");
