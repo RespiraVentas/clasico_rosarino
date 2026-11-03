@@ -1,0 +1,13 @@
+# robots.txt — Clásico Rosarino
+# Permite que los buscadores lean todo el sitio.
+# /prueba/ y /revision/ ya traen <meta name="robots" content="noindex"> en la página,
+# así que NO se bloquean acá (si se bloquearan, el buscador no podría leer ese "noindex").
+#
+# Ojo: los buscadores solo leen este archivo cuando el sitio tiene dominio propio.
+# Mientras la dirección sea respiraventas.github.io/clasico_rosarino/, no tiene efecto.
+#
+# Cuando haya dirección definitiva, reemplazar este archivo por seo/plantillas/robots.txt
+# con la dirección completada (ver AUDITORIA-DATOS-SEO.md, sección "Dirección del sitio").
+
+User-agent: *
+Allow: /
